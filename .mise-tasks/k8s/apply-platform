@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Apply platform resources (Istio) with helmfile"
-#MISE arg "env" help="Environment name (default: local)"
-
-ENV="${1:-local}"
-
-kubectl apply -f k8s/platform/namespace.yaml
-cd k8s/platform && helmfile -e "${ENV}" sync
-kubectl label namespace default istio-injection=enabled --overwrite

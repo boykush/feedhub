@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Apply all k8s resources for local environment (platform + apps)"
+#MISE depends=["k8s:local:apply-platform"]
+
+echo "Applying application resources for local environment..."
+kubectl apply -k "k8s/apps/overlays/local"
