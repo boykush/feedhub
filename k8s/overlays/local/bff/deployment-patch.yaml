@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: bff-service
+          image: bff-service:latest
+          imagePullPolicy: Never

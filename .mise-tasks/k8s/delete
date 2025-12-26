@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 #MISE description="Delete services from Kubernetes"
+#MISE arg "env" help="Environment name (default: local)"
 
-kubectl delete -k k8s/
+ENV="${1:-local}"
+
+kubectl delete -k "k8s/overlays/${ENV}"

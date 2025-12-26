@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 #MISE description="Deploy services to Kubernetes"
+#MISE arg "env" help="Environment name (default: local)"
 
-kubectl apply -k k8s/
+ENV="${1:-local}"
+
+kubectl apply -k "k8s/overlays/${ENV}"

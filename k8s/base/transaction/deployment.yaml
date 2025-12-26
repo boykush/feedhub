@@ -17,7 +17,6 @@ spec:
       containers:
       - name: transaction-service
         image: transaction-service:latest
-        imagePullPolicy: Never
         ports:
         - containerPort: 50051
           name: grpc

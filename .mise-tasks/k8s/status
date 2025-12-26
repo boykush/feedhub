@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Check Kubernetes deployment status"
-
-kubectl get all -n default
