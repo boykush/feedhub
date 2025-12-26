@@ -22,4 +22,4 @@ plugins:
     out: gen/go
     opt:
       - paths=source_relative
-      - grpc_api_configuration=proto/api_config.yaml
+      - grpc_api_configuration=rest_api.yaml
