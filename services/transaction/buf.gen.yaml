@@ -9,7 +9,9 @@ plugins:
     out: gen/go
     opt:
       - paths=source_relative
+    include_imports: true
   - remote: buf.build/grpc/go
     out: gen/go
     opt:
       - paths=source_relative
+    include_imports: true
