@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Delete services from Kubernetes"
+
+kubectl delete -k k8s/

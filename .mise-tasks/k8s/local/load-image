@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Load Docker image to kind cluster"
+#MISE arg "image" help="Docker image name to load (default: transaction-service:latest)"
+
+IMAGE="${1:-transaction-service:latest}"
+
+echo "Loading image: $IMAGE"
+kind load docker-image "$IMAGE" --name foresee

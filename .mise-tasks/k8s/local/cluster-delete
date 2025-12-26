@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Delete kind cluster named foresee"
+
+kind delete cluster --name foresee

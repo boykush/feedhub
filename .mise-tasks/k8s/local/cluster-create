@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Create kind cluster named foresee"
+
+kind create cluster --name foresee

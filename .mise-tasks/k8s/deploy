@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Deploy services to Kubernetes"
+
+kubectl apply -k k8s/
