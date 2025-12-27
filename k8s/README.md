@@ -51,7 +51,7 @@ mise run k8s:local:cluster:create
 
 ### プラットフォームリソースのデプロイ
 ```bash
-mise run k8s:local:apply-platform
+mise run k8s:local:deploy-platform
 ```
 
 ### アプリケーションのデプロイ
@@ -61,7 +61,12 @@ mise run docker:build
 mise run k8s:local:cluster:load-image
 
 # 全リソースのデプロイ（platform + workloads）
-mise run k8s:local:apply
+mise run k8s:local:deploy
+```
+
+### ArgoCD GUIの起動
+```bash
+mise run k8s:local:argocd-gui
 ```
 
 ### クラスタの削除
@@ -76,5 +81,16 @@ mise tasks | grep k8s
 
 ## GitOps with ArgoCD
 
-本番環境では、ArgoCDを使用してこのリポジトリからデプロイを自動化します。
-ArgoCD Applicationリソースで、各環境のoverlayを指定します。
+ArgoCDを使用してGitリポジトリからデプロイを自動化します。
+
+### ローカル環境
+
+- **リポジトリ**: 公開GitHubリポジトリ（認証不要）
+- **同期モード**: Auto sync有効
+- **デプロイ方法**: ArgoCDが自動的にGitリポジトリと同期
+
+### 本番環境
+
+- **リポジトリ**: 公開GitHubリポジトリまたはプライベートリポジトリ（認証が必要な場合）
+- **同期モード**: Auto sync有効
+- **デプロイ方法**: ArgoCDが自動的にGitリポジトリと同期
