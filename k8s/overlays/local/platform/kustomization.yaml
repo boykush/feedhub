@@ -5,7 +5,11 @@ resources:
   - ../../../base/platform
 
 patches:
-  - path: istio-ingressgateway-patch.yaml
+  - path: istio-ingressgateway/application-patch.yaml
     target:
       kind: Application
       name: istio-ingressgateway
+  - path: foresee/application-patch.yaml
+    target:
+      kind: Application
+      name: foresee

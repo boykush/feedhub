@@ -6,3 +6,4 @@ resources:
   - istio-base/application.yaml
   - istiod/application.yaml
   - istio-ingressgateway
+  - foresee/application.yaml

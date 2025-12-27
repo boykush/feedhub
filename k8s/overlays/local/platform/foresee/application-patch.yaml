@@ -1,0 +1,9 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: foresee
+  namespace: argocd
+spec:
+  source:
+    repoURL: file:///Users/boykush/github/boykush/repositories/foresee
+    path: k8s/overlays/local/workloads
