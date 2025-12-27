@@ -6,3 +6,5 @@ metadata:
 spec:
   source:
     path: k8s/overlays/local/workloads
+  syncPolicy:
+    automated: null
