@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#MISE description="Open ArgoCD GUI on localhost:8081"
+#MISE depends=["k8s:local:apply"]
+
+# Get admin password
+echo "ArgoCD Admin Password:"
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+echo -e "\n"
+
+echo "Opening ArgoCD GUI on http://localhost:8081"
+echo "Username: admin"
+echo "Press Ctrl+C to stop port-forwarding"
+echo ""
+
+# Port-forward to ArgoCD server
+kubectl port-forward svc/argocd-server -n argocd 8081:443
