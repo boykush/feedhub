@@ -1,0 +1,27 @@
+name: BFF CI
+
+on:
+  pull_request:
+    paths:
+      - 'services/bff/**'
+      - '.github/workflows/bff-ci.yml'
+      - '.github/actions/go-ci/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'services/bff/**'
+      - '.github/workflows/bff-ci.yml'
+      - '.github/actions/go-ci/**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Go CI
+        uses: ./.github/actions/go-ci
+        with:
+          service: bff

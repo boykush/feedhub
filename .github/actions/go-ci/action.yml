@@ -1,0 +1,32 @@
+name: Go CI
+description: Run Go tests, formatting checks, and linting
+
+inputs:
+  service:
+    description: 'Service name (e.g., transaction, bff)'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup mise
+      uses: jdx/mise-action@v2
+
+    - name: Run Go fmt check
+      shell: bash
+      run: |
+        mise run go:fmt ${{ inputs.service }}
+        # Check if there are any changes after formatting
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "Error: Code is not formatted. Please run 'mise run go:fmt ${{ inputs.service }}'"
+          git diff
+          exit 1
+        fi
+
+    - name: Run Go lint
+      shell: bash
+      run: mise run go:lint ${{ inputs.service }}
+
+    - name: Run Go tests
+      shell: bash
+      run: mise run go:test ${{ inputs.service }}
