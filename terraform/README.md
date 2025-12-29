@@ -6,13 +6,11 @@ ForeseeプロジェクトのGCPインフラストラクチャをTerraformで管�
 
 ```
 terraform/
-├── environments/
-│   └── prod/          # 本番環境の設定
-│       ├── versions.tf    # Terraformバージョンとbackend設定
-│       ├── provider.tf    # GCPプロバイダー設定
-│       ├── variables.tf   # 変数定義
-│       └── main.tf        # リソース定義
-└── modules/           # 再利用可能なモジュール（今後追加予定）
+├── versions.tf           # Terraformバージョンとbackend設定
+├── provider.tf           # GCPプロバイダー設定
+├── variables.tf          # 変数定義
+├── main.tf               # 共通リソース定義
+└── artifact-registry.tf  # Artifact Registryリソース
 ```
 
 ## セットアップ
@@ -38,8 +36,7 @@ TF_VAR_project_id = "YOUR_PROJECT_ID"
 ### 3. Terraform の初期化
 
 ```bash
-cd terraform/environments/prod
-mise exec -- terraform init
+mise run tf:init
 ```
 
 ## 使い方
@@ -47,14 +44,20 @@ mise exec -- terraform init
 ### mise タスク経由（推奨）
 
 ```bash
+# 初期化
+mise run tf:init
+
 # Plan の実行
 mise run tf:plan
+
+# Apply の実行
+mise run tf:apply
 ```
 
 ### 直接実行
 
 ```bash
-cd terraform/environments/prod
+cd terraform
 
 # Plan
 mise exec -- terraform plan
