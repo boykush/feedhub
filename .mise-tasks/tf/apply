@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#MISE description="Apply Terraform changes for prod environment"
+#MISE dir="terraform/environments/prod"
+# Requires: TF_VAR_project_id (set in .mise.local.toml)
+
+terraform apply

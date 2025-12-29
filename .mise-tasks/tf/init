@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Initialize Terraform for prod environment"
+#MISE dir="terraform/environments/prod"
+
+terraform init
