@@ -1,0 +1,45 @@
+name: Push Docker Image to GAR
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        required: true
+        type: string
+        description: 'Service name (e.g., transaction, bff)'
+
+env:
+  GCP_REGION: asia-northeast1
+  GAR_REPOSITORY: foresee
+
+jobs:
+  push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider
+          service_account: github-actions@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GAR
+        run: gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
+
+      - name: Build and push ${{ inputs.service }} service
+        run: |
+          IMAGE_NAME="${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ inputs.service }}:${{ github.sha }}"
+          IMAGE_NAME_LATEST="${{ env.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}/${{ inputs.service }}:latest"
+
+          docker build -t $IMAGE_NAME -t $IMAGE_NAME_LATEST -f services/${{ inputs.service }}/Dockerfile services/${{ inputs.service }}
+          docker push $IMAGE_NAME
+          docker push $IMAGE_NAME_LATEST

@@ -25,3 +25,11 @@ jobs:
         uses: ./.github/actions/go-ci
         with:
           service: bff
+
+  push-image:
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: ./.github/workflows/push-image.yml
+    secrets: inherit
+    with:
+      service: bff
