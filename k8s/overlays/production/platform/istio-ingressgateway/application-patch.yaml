@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-ingressgateway
+  namespace: argocd
+spec:
+  source:
+    helm:
+      values: |
+        service:
+          type: LoadBalancer
+          ports:
+            - name: status-port
+              port: 15021
+              targetPort: 15021
+              protocol: TCP
+            - name: http
+              port: 80
+              targetPort: 8080
+              protocol: TCP

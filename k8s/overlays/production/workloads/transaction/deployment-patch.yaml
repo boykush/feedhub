@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transaction-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: transaction-service
+          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/transaction-service:latest

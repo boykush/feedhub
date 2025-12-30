@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bff-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: bff-service
+          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/bff-service:latest
