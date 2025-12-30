@@ -5,6 +5,7 @@ on:
     paths:
       - 'services/transaction/**'
       - '.github/workflows/transaction-ci.yml'
+      - '.github/workflows/push-image.yml'
       - '.github/actions/go-ci/**'
   push:
     branches:
@@ -12,6 +13,7 @@ on:
     paths:
       - 'services/transaction/**'
       - '.github/workflows/transaction-ci.yml'
+      - '.github/workflows/push-image.yml'
       - '.github/actions/go-ci/**'
 
 jobs:
