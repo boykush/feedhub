@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: transaction-service
-          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/transaction-service:latest
+          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/transaction-service:c6ab27c10dcaf24abdd7d7149564c9747222a1c1

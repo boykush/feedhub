@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: bff-service
-          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/bff-service:latest
+          image: asia-northeast1-docker.pkg.dev/foresee-482707/foresee/bff-service:6c36a93f20073920db7ef98b01fa1edeb7abb5ad
