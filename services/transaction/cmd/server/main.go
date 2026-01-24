@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net"
@@ -9,20 +10,39 @@ import (
 	"syscall"
 
 	transactionv1 "github.com/boykush/foresee/services/transaction/gen/go"
+	"github.com/boykush/foresee/services/transaction/internal/infra/repository"
+	"github.com/boykush/foresee/services/transaction/internal/infra/storage"
 	"github.com/boykush/foresee/services/transaction/internal/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
 const (
-	defaultPort = "50051"
+	defaultPort   = "50051"
+	defaultCSVKey = "transactions.csv"
 )
 
 func main() {
+	ctx := context.Background()
+
 	port := os.Getenv("TRANSACTION_SERVICE_PORT")
 	if port == "" {
 		port = defaultPort
 	}
+
+	csvKey := os.Getenv("STORAGE_CSV_KEY")
+	if csvKey == "" {
+		csvKey = defaultCSVKey
+	}
+
+	// Initialize storage client
+	storageClient, err := storage.NewClient(ctx)
+	if err != nil {
+		log.Fatalf("failed to create storage client: %v", err)
+	}
+
+	// Initialize repository
+	repo := repository.NewTransactionRepository(storageClient, csvKey)
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
@@ -30,7 +50,7 @@ func main() {
 	}
 
 	grpcServer := grpc.NewServer()
-	transactionServer := server.NewServer()
+	transactionServer := server.NewServer(repo)
 
 	transactionv1.RegisterTransactionServiceServer(grpcServer, transactionServer)
 
