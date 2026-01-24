@@ -5,3 +5,4 @@ resources:
   - bff
   - transaction
   - istio
+  - minio
