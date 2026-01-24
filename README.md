@@ -11,15 +11,13 @@ foresee/
 │   └── transaction/  # 取引管理サービス
 ├── k8s/              # Kubernetesマニフェスト
 │   ├── base/         # ベースマニフェスト
-│   └── overlays/     # 環境別設定
-├── terraform/        # GCPインフラストラクチャ管理
+│   └── overlays/     # 環境別設定（local）
 └── .mise-tasks/      # タスク定義（mise用）
 ```
 
 詳細は各ディレクトリのREADMEを参照してください：
 - [services/README.md](services/README.md) - マイクロサービスアーキテクチャとサービス一覧
 - [k8s/README.md](k8s/README.md) - Kubernetesマニフェストの構成と管理
-- [terraform/README.md](terraform/README.md) - GCPインフラストラクチャのTerraform管理
 
 ## 開発環境のセットアップ
 

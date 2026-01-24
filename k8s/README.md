@@ -40,7 +40,7 @@ k8s/
 ### Base vs Overlays
 
 - **base/**: 環境に依存しない共通のマニフェスト
-- **overlays/**: 環境ごとの設定（local, staging, production等）
+- **overlays/**: 環境ごとの設定（現在はlocalのみ）
 
 ## ローカル開発
 
@@ -83,14 +83,6 @@ mise tasks | grep k8s
 
 ArgoCDを使用してGitリポジトリからデプロイを自動化します。
 
-### ローカル環境
-
 - **リポジトリ**: 公開GitHubリポジトリ（認証不要）
-- **同期モード**: Auto sync有効
-- **デプロイ方法**: ArgoCDが自動的にGitリポジトリと同期
-
-### 本番環境
-
-- **リポジトリ**: 公開GitHubリポジトリまたはプライベートリポジトリ（認証が必要な場合）
 - **同期モード**: Auto sync有効
 - **デプロイ方法**: ArgoCDが自動的にGitリポジトリと同期

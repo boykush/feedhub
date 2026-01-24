@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Connect to GKE production cluster"
-
-echo "Connecting to GKE cluster..."
-gcloud container clusters get-credentials foresee-cluster --region asia-northeast1
-
-echo "Connected to foresee-cluster"
-kubectl config current-context
