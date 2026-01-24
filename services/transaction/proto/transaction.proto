@@ -2,7 +2,65 @@ syntax = "proto3";
 
 package transaction.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/boykush/foresee/services/transaction/gen/go/transaction/v1;transactionv1";
+
+// Category represents the category of a transaction
+enum Category {
+  CATEGORY_UNSPECIFIED = 0;
+  CATEGORY_INCOME = 1;               // Income
+  CATEGORY_FOOD = 2;                 // Food
+  CATEGORY_DAILY_NECESSITIES = 3;   // Daily necessities
+  CATEGORY_HOBBY = 4;                // Hobby & Entertainment
+  CATEGORY_SOCIAL = 5;               // Social expenses
+  CATEGORY_TRANSPORTATION = 6;       // Transportation
+  CATEGORY_CLOTHING = 7;             // Clothing & Beauty
+  CATEGORY_HEALTH = 8;               // Health & Medical
+  CATEGORY_AUTOMOBILE = 9;           // Automobile
+  CATEGORY_EDUCATION = 10;           // Education
+  CATEGORY_SPECIAL = 11;             // Special expenses
+  CATEGORY_CASH_CARD = 12;           // Cash & Card
+  CATEGORY_UTILITIES = 13;           // Utilities
+  CATEGORY_COMMUNICATION = 14;       // Communication
+  CATEGORY_HOUSING = 15;             // Housing
+  CATEGORY_TAX_SOCIAL_SECURITY = 16; // Tax & Social security
+  CATEGORY_INSURANCE = 17;           // Insurance
+  CATEGORY_OTHER = 18;               // Other
+}
+
+// Money represents an amount of money with currency-agnostic precision
+message Money {
+  // The whole units of the amount
+  int64 units = 1;
+  // Number of nano units of the amount (10^-9)
+  // Must be between -999,999,999 and +999,999,999 inclusive
+  // Sign must match units (both positive, both negative, or both zero)
+  int32 nanos = 2;
+}
+
+// Transaction represents a single financial transaction
+message Transaction {
+  // Unique identifier for the transaction
+  string id = 1;
+  // Date of the transaction
+  google.protobuf.Timestamp date = 2;
+  // Title or description of the transaction
+  string title = 3;
+  // Amount of the transaction (negative for expenses, positive for income)
+  Money amount = 4;
+  // Category of the transaction
+  Category category = 5;
+}
+
+// ListTransactionsRequest is the request for listing transactions
+message ListTransactionsRequest {}
+
+// ListTransactionsResponse is the response for listing transactions
+message ListTransactionsResponse {
+  // List of transactions
+  repeated Transaction transactions = 1;
+}
 
 // HealthCheckRequest is the request for health check
 message HealthCheckRequest {
@@ -24,4 +82,6 @@ message HealthCheckResponse {
 service TransactionService {
   // HealthCheck checks if the service is healthy
   rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  // ListTransactions returns a list of all transactions
+  rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse);
 }
