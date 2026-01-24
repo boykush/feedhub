@@ -6,3 +6,5 @@ http:
     # Transaction Service - /api/v1/transactions/* 配下
     - selector: transaction.v1.TransactionService.HealthCheck
       get: /api/v1/transactions/health
+    - selector: transaction.v1.TransactionService.ListTransactions
+      get: /api/v1/transactions

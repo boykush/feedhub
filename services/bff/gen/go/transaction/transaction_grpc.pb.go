@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TransactionService_HealthCheck_FullMethodName = "/transaction.v1.TransactionService/HealthCheck"
+	TransactionService_HealthCheck_FullMethodName      = "/transaction.v1.TransactionService/HealthCheck"
+	TransactionService_ListTransactions_FullMethodName = "/transaction.v1.TransactionService/ListTransactions"
 )
 
 // TransactionServiceClient is the client API for TransactionService service.
@@ -30,6 +31,8 @@ const (
 type TransactionServiceClient interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	// ListTransactions returns a list of all transactions
+	ListTransactions(ctx context.Context, in *ListTransactionsRequest, opts ...grpc.CallOption) (*ListTransactionsResponse, error)
 }
 
 type transactionServiceClient struct {
@@ -50,6 +53,16 @@ func (c *transactionServiceClient) HealthCheck(ctx context.Context, in *HealthCh
 	return out, nil
 }
 
+func (c *transactionServiceClient) ListTransactions(ctx context.Context, in *ListTransactionsRequest, opts ...grpc.CallOption) (*ListTransactionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTransactionsResponse)
+	err := c.cc.Invoke(ctx, TransactionService_ListTransactions_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TransactionServiceServer is the server API for TransactionService service.
 // All implementations must embed UnimplementedTransactionServiceServer
 // for forward compatibility.
@@ -58,6 +71,8 @@ func (c *transactionServiceClient) HealthCheck(ctx context.Context, in *HealthCh
 type TransactionServiceServer interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	// ListTransactions returns a list of all transactions
+	ListTransactions(context.Context, *ListTransactionsRequest) (*ListTransactionsResponse, error)
 	mustEmbedUnimplementedTransactionServiceServer()
 }
 
@@ -70,6 +85,9 @@ type UnimplementedTransactionServiceServer struct{}
 
 func (UnimplementedTransactionServiceServer) HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HealthCheck not implemented")
+}
+func (UnimplementedTransactionServiceServer) ListTransactions(context.Context, *ListTransactionsRequest) (*ListTransactionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListTransactions not implemented")
 }
 func (UnimplementedTransactionServiceServer) mustEmbedUnimplementedTransactionServiceServer() {}
 func (UnimplementedTransactionServiceServer) testEmbeddedByValue()                            {}
@@ -110,6 +128,24 @@ func _TransactionService_HealthCheck_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TransactionService_ListTransactions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTransactionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TransactionServiceServer).ListTransactions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TransactionService_ListTransactions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TransactionServiceServer).ListTransactions(ctx, req.(*ListTransactionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TransactionService_ServiceDesc is the grpc.ServiceDesc for TransactionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -120,6 +156,10 @@ var TransactionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HealthCheck",
 			Handler:    _TransactionService_HealthCheck_Handler,
+		},
+		{
+			MethodName: "ListTransactions",
+			Handler:    _TransactionService_ListTransactions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
