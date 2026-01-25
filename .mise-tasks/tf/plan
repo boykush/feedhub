@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Run terraform plan"
-#MISE dir="terraform"
-# Requires: TF_VAR_project_id (set in .mise.local.toml)
-
-terraform plan
