@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Build Docker image for service"
-#MISE arg "service" help="Service name (e.g., transaction)"
-
-SERVICE="${1:?Service name required}"
-TAG="${2:-latest}"
-
-cd "services/$SERVICE" || exit 1
-docker build -t "$SERVICE-service:$TAG" .

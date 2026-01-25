@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 #MISE description="Run Go tests"
+#MISE depends=["proto:generate"]
 #MISE arg "service" help="Service name (e.g., transaction). If not specified, runs all tests"
 
 if [ -n "$1" ]; then
