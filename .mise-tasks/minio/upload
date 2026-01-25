@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#MISE description="Upload CSV file to MinIO transactions bucket"
+#MISE depends=["minio:setup"]
+#MISE arg "file" help="Path to CSV file"
+
+FILE="${1:?CSV file path required}"
+
+if [ ! -f "$FILE" ]; then
+  echo "Error: File not found: $FILE"
+  exit 1
+fi
+
+echo "Uploading $FILE to MinIO..."
+mc cp "$FILE" local/transactions/transactions.csv
+
+echo "Upload complete!"

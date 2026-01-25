@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
-#MISE description="Load Docker image to kind cluster"
+#MISE description="Build and load Docker image to kind cluster"
 #MISE arg "service" help="Service name (e.g., transaction, bff)"
 #MISE arg "tag" help="Image tag (default: latest)"
 
 SERVICE="${1:?Service name required}"
 TAG="${2:-latest}"
-
 IMAGE="${SERVICE}-service:${TAG}"
 
+# Build
+echo "Building image: ${IMAGE}"
+cd "services/$SERVICE" || exit 1
+docker build -t "$IMAGE" .
+cd - > /dev/null
+
+# Load
 echo "Loading image: ${IMAGE}"
 kind load docker-image "${IMAGE}" --name foresee
 
-echo "Image loaded successfully!"
+echo "Done!"

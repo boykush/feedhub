@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
-#MISE description="Deploy platform resources (ArgoCD, Istio, etc.) for local environment"
+#MISE description="Deploy platform resources (ArgoCD, Istio) for local environment"
 
-# Create namespaces first
+set -e
+
+# Create namespaces
 echo "Creating platform namespaces..."
 kubectl apply -f k8s/base/platform/namespace.yaml
 
 # Install ArgoCD if not already installed
-echo "Checking if ArgoCD is already installed..."
 if ! kubectl get deployment argocd-server -n argocd &>/dev/null; then
   echo "Installing ArgoCD..."
   kubectl apply -k k8s/base/platform/argocd
 
   echo "Waiting for ArgoCD to be ready..."
   kubectl wait --for=condition=available --timeout=300s deployment -n argocd argocd-server
-  echo "ArgoCD installed successfully!"
 else
-  echo "ArgoCD is already installed"
+  echo "ArgoCD already installed"
 fi
 
-# Deploy platform ArgoCD Applications
-echo "Deploying platform ArgoCD Applications..."
+# Deploy Istio via ArgoCD Applications
+echo "Deploying Istio via ArgoCD..."
 kubectl apply -k k8s/overlays/local/platform
+
+echo "Waiting for Istio to be ready..."
+kubectl wait --for=condition=available --timeout=300s deployment -n istio-system istiod || true
 
 echo "Platform setup complete!"

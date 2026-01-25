@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#MISE description="Setup MinIO alias and create transactions bucket"
+# Requires: k8s:local:up
+
+echo "Setting up MinIO alias..."
+mc alias set local http://localhost:9000 minioadmin minioadmin
+
+echo "Creating transactions bucket..."
+mc mb local/transactions --ignore-existing
+
+echo "MinIO setup complete!"

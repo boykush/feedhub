@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Port forward to BFF and MinIO"
+
+pkill -f "kubectl port-forward.*bff" 2>/dev/null
+pkill -f "kubectl port-forward.*minio" 2>/dev/null
+
+kubectl port-forward svc/bff-service -n default 8080:80 &>/dev/null &
+kubectl port-forward svc/minio -n default 9000:9000 9001:9001 &>/dev/null &
+
+echo "BFF API:       http://localhost:8080"
+echo "MinIO API:     http://localhost:9000"
+echo "MinIO Console: http://localhost:9001"
