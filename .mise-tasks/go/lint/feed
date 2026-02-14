@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Lint feed service code"
+
+cd services/feed || exit 1
+go vet ./...

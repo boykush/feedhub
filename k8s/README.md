@@ -15,7 +15,10 @@ k8s/
 │   │   └── istiod/
 │   └── workloads/             # アプリケーション層
 │       ├── bff/
-│       ├── transaction/
+│       ├── feed/
+│       ├── collector/
+│       ├── web/
+│       ├── postgres/
 │       └── istio/             # Istio設定（Gateway, VirtualService等）
 └── overlays/                  # 環境別のオーバーレイ
     └── local/                 # ローカル開発環境
@@ -32,7 +35,8 @@ k8s/
   - Istio: サービスメッシュ（istio-base, istiod, ingressgateway）
 
 - **workloads/**: アプリケーション層
-  - マイクロサービス（bff, transaction等）
+  - マイクロサービス（bff, feed, collector, web）
+  - データベース（postgres - CloudNativePG）
   - Istio設定（Gateway, VirtualService, AuthorizationPolicy等）
 
 この分離により、プラットフォーム層とアプリケーション層を独立して管理できます。
@@ -57,16 +61,13 @@ mise run k8s:local:deploy-platform
 ### アプリケーションのデプロイ
 ```bash
 # Dockerイメージのビルドとロード
-mise run docker:build
-mise run k8s:local:cluster:load-image
+mise run k8s:local:cluster:load-image bff
+mise run k8s:local:cluster:load-image feed
+mise run k8s:local:cluster:load-image collector
+mise run k8s:local:cluster:load-image web
 
 # 全リソースのデプロイ（platform + workloads）
 mise run k8s:local:deploy
-```
-
-### ArgoCD GUIの起動
-```bash
-mise run k8s:local:argocd-gui
 ```
 
 ### クラスタの削除
@@ -78,11 +79,3 @@ mise run k8s:local:cluster:delete
 ```bash
 mise tasks | grep k8s
 ```
-
-## GitOps with ArgoCD
-
-ArgoCDを使用してGitリポジトリからデプロイを自動化します。
-
-- **リポジトリ**: 公開GitHubリポジトリ（認証不要）
-- **同期モード**: Auto sync有効
-- **デプロイ方法**: ArgoCDが自動的にGitリポジトリと同期

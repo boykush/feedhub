@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - bff
-  - transaction
+  - feed
+  - collector
+  - web
+  - postgres
   - istio
-  - minio

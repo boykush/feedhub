@@ -6,10 +6,15 @@
 
 ```
 ┌─────────────────┐
-│   Client App    │
+│     Browser      │
 └────────┬────────┘
-         │ HTTP/REST
+         │ HTTP
          ▼
+    ┌────────┐
+    │  Web   │ ← Next.js フロントエンド
+    └───┬────┘
+        │ HTTP/REST
+        ▼
     ┌────────┐
     │  BFF   │ ← エントリポイント (grpc-gateway)
     └───┬────┘
@@ -18,63 +23,60 @@
    ┌──────────────────────┐
    │  Backend Services    │
    ├──────────────────────┤
-   │ • transaction        │
-   │ • (future services)  │
-   └──────────────────────┘
+   │ • feed               │
+   │ • collector           │
+   └──────────┬───────────┘
+              │
+              ▼
+        ┌──────────┐
+        │ PostgreSQL│
+        └──────────┘
 ```
 
 ## サービス一覧
 
+### [web/](web/)
+**フロントエンド** - Next.js App Routerによるユーザーインターフェース
+
+- 役割: フィード一覧・記事一覧の表示、フィード登録、同期操作
+- 技術: Next.js, TypeScript, Tailwind CSS
+- ポート: 3000
+
 ### [bff/](bff/)
-**Backend for Frontend** - クライアントアプリケーションのエントリポイント
+**Backend for Frontend** - クライアントアプリケーションのAPIゲートウェイ
 
 - 役割: REST APIエンドポイントを提供し、内部のgRPCマイクロサービスへリクエストをルーティング
 - 技術: grpc-gateway を使用してgRPCをHTTP/RESTに変換
-- 設定ファイル: [rest_api.yaml](bff/rest_api.yaml) - HTTPマッピング定義
+- ポート: 8080
 
-### [transaction/](transaction/)
-取引管理サービス
+### [feed/](feed/)
+**フィード読み取りサービス** - フィードと記事データの読み取りAPI
 
-- 役割: 取引データの管理と処理
+- 役割: フィード一覧・記事一覧の取得
 - プロトコル: gRPC
-- エンドポイント例: `/api/v1/transactions/*`
+- ポート: 50052
+
+### [collector/](collector/)
+**RSS収集サービス** - RSSフィードの収集と保存
+
+- 役割: RSSフィードの登録、全フィードの同期（記事取得・保存）
+- プロトコル: gRPC
+- ポート: 50053
 
 ## 開発
 
 ### 利用可能なコマンド
 ```bash
-# 利用可能なコマンド一覧
+# Go サービス
 mise tasks | grep go
+
+# Web フロントエンド
+mise tasks | grep web
 ```
 
 ### Protocol Buffers コード生成
 ```bash
-mise run proto:generate
+mise run proto:generate feed
+mise run proto:generate collector
+mise run proto:generate bff
 ```
-
-### ローカル実行
-```bash
-# 各サービスディレクトリで直接実行
-cd services/bff
-go run cmd/server/main.go
-
-cd services/transaction
-go run cmd/server/main.go
-```
-
-## 新しいマイクロサービスの追加
-
-1. `services/`配下に新しいディレクトリを作成
-2. Protocol Buffersで定義ファイルを作成 (`proto/*.proto`)
-3. BFFの[rest_api.yaml](bff/rest_api.yaml)にHTTPマッピングを追加
-4. BFFのprotoディレクトリにシンボリックリンクを作成（必要に応じて）
-
-```bash
-# 例: user サービスの追加
-mkdir -p services/user/proto
-# proto定義を作成...
-cd services/bff/proto
-ln -s ../../user/proto user
-```
-
-各サービスディレクトリには個別の`go.mod`があり、独立してビルド・デプロイ可能です。

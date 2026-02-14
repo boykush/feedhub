@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Install Next.js dependencies"
+
+cd services/web || exit 1
+npm install

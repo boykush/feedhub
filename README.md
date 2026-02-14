@@ -1,6 +1,6 @@
 # Foresee
 
-マイクロサービスアーキテクチャで構築されたアプリケーション。
+RSSフィードを収集・閲覧できる個人向けWebアプリケーション。マイクロサービスアーキテクチャで構築されています。
 
 ## プロジェクト構成
 
@@ -8,7 +8,9 @@
 foresee/
 ├── services/          # マイクロサービス群
 │   ├── bff/          # Backend for Frontend (gRPC Gateway)
-│   └── transaction/  # 取引管理サービス
+│   ├── feed/         # フィード読み取りサービス
+│   ├── collector/    # RSS収集サービス
+│   └── web/          # フロントエンド (Next.js)
 ├── k8s/              # Kubernetesマニフェスト
 │   ├── base/         # ベースマニフェスト
 │   └── overlays/     # 環境別設定（local）
@@ -64,9 +66,14 @@ mise install
 mise run k8s:local:cluster:create
 
 # 3. Dockerイメージのビルドとロード
-mise run docker:build
-mise run k8s:local:cluster:load-image
+mise run k8s:local:cluster:load-image bff
+mise run k8s:local:cluster:load-image feed
+mise run k8s:local:cluster:load-image collector
+mise run k8s:local:cluster:load-image web
 
 # 4. Kubernetesリソースのデプロイ
-mise run k8s:local:apply
+mise run k8s:local:deploy
+
+# 5. ポートフォワード
+mise run k8s:local:forward
 ```

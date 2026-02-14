@@ -1,6 +1,11 @@
 version: v2
 managed:
   enabled: true
+  disable:
+    - file_option: go_package
+      module: buf.build/googleapis/googleapis
+    - file_option: go_package
+      module: buf.build/grpc/grpc
   override:
     - file_option: go_package_prefix
       value: github.com/boykush/foresee/services/bff/gen/go
@@ -17,9 +22,8 @@ plugins:
     opt:
       - paths=source_relative
 
-  # Generate grpc-gateway code with external HTTP mapping
+  # Generate grpc-gateway code
   - local: protoc-gen-grpc-gateway
     out: gen/go
     opt:
       - paths=source_relative
-      - grpc_api_configuration=rest_api.yaml

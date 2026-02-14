@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Lint collector service code"
+
+cd services/collector || exit 1
+go vet ./...

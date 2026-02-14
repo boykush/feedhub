@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector-service
+  labels:
+    app: collector-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collector-service
+  template:
+    metadata:
+      labels:
+        app: collector-service
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      serviceAccountName: collector-service
+      containers:
+      - name: collector-service
+        image: collector-service:latest
+        ports:
+        - containerPort: 50053
+          name: grpc
+          protocol: TCP
+        env:
+        - name: COLLECTOR_SERVICE_PORT
+          value: "50053"

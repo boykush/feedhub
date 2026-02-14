@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Run go mod tidy"
-#MISE arg "service" help="Service name (e.g., transaction)"
-
-SERVICE="${1:?Service name required}"
-
-cd "services/$SERVICE" || exit 1
-go mod tidy
