@@ -25,4 +25,11 @@ kubectl apply -k k8s/overlays/local/platform
 echo "Waiting for Istio to be ready..."
 kubectl wait --for=condition=available --timeout=300s deployment -n istio-system istiod || true
 
+# Deploy CloudNativePG via ArgoCD Application
+echo "Deploying CloudNativePG via ArgoCD..."
+kubectl apply -f k8s/base/platform/cloudnative-pg/application.yaml
+
+echo "Waiting for CloudNativePG operator to be ready..."
+kubectl wait --for=condition=available --timeout=300s deployment -n cnpg-system cloudnative-pg
+
 echo "Platform setup complete!"

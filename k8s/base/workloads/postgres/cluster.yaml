@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 1
+  storage:
+    size: 1Gi
+  bootstrap:
+    initdb:
+      database: collector_db
+      owner: feedhub
+      postInitSQL:
+        - CREATE DATABASE feed_db OWNER feedhub
+  managed:
+    roles:
+    - name: feedhub
+      login: true
+      passwordSecret:
+        name: postgres-user-secret
