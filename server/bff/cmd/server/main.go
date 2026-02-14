@@ -14,8 +14,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	collectorpb "github.com/boykush/foresee/server/bff/gen/go/collector"
-	feedpb "github.com/boykush/foresee/server/bff/gen/go/feed"
+	collectorpb "github.com/boykush/feedhub/server/bff/gen/go/collector"
+	feedpb "github.com/boykush/feedhub/server/bff/gen/go/feed"
 )
 
 func main() {

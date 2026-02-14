@@ -1,6 +1,6 @@
 # Kubernetes Manifests
 
-このディレクトリには、Foreseeアプリケーションのkubernetesマニフェストが含まれています。
+このディレクトリには、Feedhubアプリケーションのkubernetesマニフェストが含まれています。
 Kustomizeを使用した階層構造で管理しており、環境ごとのオーバーレイで設定を上書きできます。
 
 ## ディレクトリ構成

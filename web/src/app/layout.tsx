@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "Foresee - RSS Reader",
+	title: "Feedhub - RSS Reader",
 	description: "A simple RSS feed reader",
 };
 
@@ -17,7 +17,7 @@ export default function RootLayout({
 				<header className="bg-white border-b border-gray-200">
 					<div className="max-w-4xl mx-auto px-4 py-4">
 						<a href="/" className="text-xl font-bold text-blue-600">
-							Foresee
+							Feedhub
 						</a>
 					</div>
 				</header>

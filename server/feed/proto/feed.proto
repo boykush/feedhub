@@ -4,7 +4,7 @@ package feed.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/boykush/foresee/server/feed/gen/go/feed/v1;feedv1";
+option go_package = "github.com/boykush/feedhub/server/feed/gen/go/feed/v1;feedv1";
 
 // Feed represents an RSS/Atom feed source
 message Feed {

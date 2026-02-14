@@ -8,8 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	collectorv1 "github.com/boykush/foresee/server/collector/gen/go"
-	"github.com/boykush/foresee/server/collector/internal/server"
+	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
+	"github.com/boykush/feedhub/server/collector/internal/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )

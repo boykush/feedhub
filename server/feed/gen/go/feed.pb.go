@@ -534,7 +534,7 @@ const file_feed_proto_rawDesc = "" +
 	"\vHealthCheck\x12\x1b.feed.v1.HealthCheckRequest\x1a\x1c.feed.v1.HealthCheckResponse\x12B\n" +
 	"\tListFeeds\x12\x19.feed.v1.ListFeedsRequest\x1a\x1a.feed.v1.ListFeedsResponse\x12K\n" +
 	"\fListArticles\x12\x1c.feed.v1.ListArticlesRequest\x1a\x1d.feed.v1.ListArticlesResponseB\x8b\x01\n" +
-	"\vcom.feed.v1B\tFeedProtoP\x01Z4github.com/boykush/foresee/server/feed/gen/go;feedv1\xa2\x02\x03FXX\xaa\x02\aFeed.V1\xca\x02\aFeed\\V1\xe2\x02\x13Feed\\V1\\GPBMetadata\xea\x02\bFeed::V1b\x06proto3"
+	"\vcom.feed.v1B\tFeedProtoP\x01Z4github.com/boykush/feedhub/server/feed/gen/go;feedv1\xa2\x02\x03FXX\xaa\x02\aFeed.V1\xca\x02\aFeed\\V1\xe2\x02\x13Feed\\V1\\GPBMetadata\xea\x02\bFeed::V1b\x06proto3"
 
 var (
 	file_feed_proto_rawDescOnce sync.Once
