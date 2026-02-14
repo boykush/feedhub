@@ -3,14 +3,14 @@ name: BFF CI
 on:
   pull_request:
     paths:
-      - 'services/bff/**'
+      - 'server/bff/**'
       - '.github/workflows/bff-ci.yml'
       - '.github/actions/go-ci/**'
   push:
     branches:
       - main
     paths:
-      - 'services/bff/**'
+      - 'server/bff/**'
       - '.github/workflows/bff-ci.yml'
       - '.github/actions/go-ci/**'
 

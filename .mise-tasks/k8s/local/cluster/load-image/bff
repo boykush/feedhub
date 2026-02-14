@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #MISE description="Build and load bff Docker image to kind cluster"
-#MISE dir="services/bff"
+#MISE dir="server/bff"
 
 IMAGE="bff-service:latest"
 

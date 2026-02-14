@@ -3,14 +3,14 @@ name: Collector CI
 on:
   pull_request:
     paths:
-      - 'services/collector/**'
+      - 'server/collector/**'
       - '.github/workflows/collector-ci.yml'
       - '.github/actions/go-ci/**'
   push:
     branches:
       - main
     paths:
-      - 'services/collector/**'
+      - 'server/collector/**'
       - '.github/workflows/collector-ci.yml'
       - '.github/actions/go-ci/**'
 

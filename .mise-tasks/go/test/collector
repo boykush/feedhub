@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #MISE description="Run tests for collector service"
-#MISE dir="services/collector"
+#MISE dir="server/collector"
 go test ./...
