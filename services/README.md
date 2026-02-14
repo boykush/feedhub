@@ -76,7 +76,5 @@ mise tasks | grep web
 
 ### Protocol Buffers コード生成
 ```bash
-mise run proto:generate feed
-mise run proto:generate collector
-mise run proto:generate bff
+mise run proto:generate
 ```

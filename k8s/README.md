@@ -61,10 +61,7 @@ mise run k8s:local:deploy-platform
 ### アプリケーションのデプロイ
 ```bash
 # Dockerイメージのビルドとロード
-mise run k8s:local:cluster:load-image bff
-mise run k8s:local:cluster:load-image feed
-mise run k8s:local:cluster:load-image collector
-mise run k8s:local:cluster:load-image web
+mise run k8s:local:cluster:load-image
 
 # 全リソースのデプロイ（platform + workloads）
 mise run k8s:local:deploy
