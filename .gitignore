@@ -3,3 +3,7 @@ bin/
 
 # mise local configuration (contains secrets)
 .mise.local.toml
+
+# Node.js
+node_modules/
+.next/

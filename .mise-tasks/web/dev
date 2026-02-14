@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Start Next.js development server"
+
+cd services/web || exit 1
+npm run dev

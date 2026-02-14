@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Format feed service code"
+
+cd services/feed || exit 1
+go fmt ./...

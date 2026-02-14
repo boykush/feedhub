@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: feed-service
+          image: feed-service:latest
+          imagePullPolicy: Never

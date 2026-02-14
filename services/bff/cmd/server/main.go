@@ -14,7 +14,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	transactionpb "github.com/boykush/foresee/services/bff/gen/go/transaction"
+	collectorpb "github.com/boykush/foresee/services/bff/gen/go/collector"
+	feedpb "github.com/boykush/foresee/services/bff/gen/go/feed"
 )
 
 func main() {
@@ -34,15 +35,21 @@ func run() error {
 
 	// Get configuration from environment variables
 	httpPort := getEnv("BFF_HTTP_PORT", "8080")
-	transactionServiceAddr := getEnv("TRANSACTION_SERVICE_ADDR", "transaction-service:50051")
+	feedServiceAddr := getEnv("FEED_SERVICE_ADDR", "feed-service:50052")
+	collectorServiceAddr := getEnv("COLLECTOR_SERVICE_ADDR", "collector-service:50053")
 
 	// Create gRPC-Gateway mux
 	mux := runtime.NewServeMux()
 
-	// Connect to transaction service
+	// Connect to backend services
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	if err := transactionpb.RegisterTransactionServiceHandlerFromEndpoint(ctx, mux, transactionServiceAddr, opts); err != nil {
-		return fmt.Errorf("failed to register transaction service handler: %w", err)
+
+	if err := feedpb.RegisterFeedServiceHandlerFromEndpoint(ctx, mux, feedServiceAddr, opts); err != nil {
+		return fmt.Errorf("failed to register feed service handler: %w", err)
+	}
+
+	if err := collectorpb.RegisterCollectorServiceHandlerFromEndpoint(ctx, mux, collectorServiceAddr, opts); err != nil {
+		return fmt.Errorf("failed to register collector service handler: %w", err)
 	}
 
 	// Start HTTP server

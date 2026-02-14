@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#MISE description="Build and load web Docker image to kind cluster"
+
+IMAGE="web-service:latest"
+
+echo "Building image: ${IMAGE}"
+cd "services/web" || exit 1
+docker build -t "$IMAGE" .
+cd - > /dev/null
+
+echo "Loading image: ${IMAGE}"
+kind load docker-image "${IMAGE}" --name foresee
+
+echo "Done!"

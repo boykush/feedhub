@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Lint bff service code"
+
+cd services/bff || exit 1
+go vet ./...

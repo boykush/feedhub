@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Build Go service"
-#MISE depends="proto:generate"
-#MISE arg "service" help="Service name (e.g., transaction)"
-
-SERVICE="${1:?Service name required}"
-
-cd "services/$SERVICE" || exit 1
-go build -o bin/server ./cmd/server

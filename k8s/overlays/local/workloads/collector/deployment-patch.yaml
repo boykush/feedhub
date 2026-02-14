@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: collector-service
+          image: collector-service:latest
+          imagePullPolicy: Never

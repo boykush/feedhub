@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Run tests for collector service"
+
+cd services/collector || exit 1
+go test ./...

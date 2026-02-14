@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-#MISE description="Generate code from proto files using buf"
-#MISE arg "service" help="Service name (e.g., transaction, bff)"
-
-SERVICE="${1:?Service name required}"
-
-cd "services/$SERVICE" || exit 1
-buf generate
