@@ -30,6 +30,6 @@ echo "Deploying CloudNativePG via ArgoCD..."
 kubectl apply -f k8s/base/platform/cloudnative-pg/application.yaml
 
 echo "Waiting for CloudNativePG operator to be ready..."
-kubectl wait --for=condition=available --timeout=300s deployment -n cnpg-system cnpg-controller-manager || true
+kubectl wait --for=condition=available --timeout=300s deployment -n cnpg-system cloudnative-pg
 
 echo "Platform setup complete!"
