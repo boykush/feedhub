@@ -7,5 +7,4 @@ resources:
   - feed
   - collector
   - web
-  - postgres
   - istio

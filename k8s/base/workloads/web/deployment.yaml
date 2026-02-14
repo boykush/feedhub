@@ -26,5 +26,7 @@ spec:
           name: http
           protocol: TCP
         env:
+        - name: HOSTNAME
+          value: "0.0.0.0"
         - name: NEXT_PUBLIC_API_URL
           value: "http://bff-service:8080"

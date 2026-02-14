@@ -9,6 +9,3 @@ spec:
         - name: collector-service
           image: collector-service:latest
           imagePullPolicy: Never
-          env:
-            - name: DATABASE_URL
-              value: "postgresql://foresee@postgres-cluster-rw:5432/foresee?sslmode=disable"
