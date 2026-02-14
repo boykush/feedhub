@@ -7,3 +7,4 @@ resources:
   - istiod/application.yaml
   - istio-ingressgateway
   - foresee/application.yaml
+  - cloudnative-pg/application.yaml
