@@ -11,4 +11,4 @@ pnpm = "10.29.3"
 "go:github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway" = "v2.24.0"
 
 [hooks]
-postinstall = "cd web && pnpm install"
+postinstall = "env -u MISE_TOOL_VERSION mise run web:install"
