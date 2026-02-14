@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Create cluster, build images, deploy, and start port-forwards"
+
+set -e
+
+mise run k8s:local:cluster:create
+mise run k8s:local:cluster:load-image
+mise run k8s:local:deploy
+mise run k8s:local:forward
