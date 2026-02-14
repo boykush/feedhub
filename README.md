@@ -63,18 +63,6 @@ mise tasks
 # 1. 依存ツールのインストール
 mise install
 
-# 2. ローカルk8sクラスタ作成
-mise run k8s:local:cluster:create
-
-# 3. Dockerイメージのビルドとロード
-mise run k8s:local:cluster:load-image bff
-mise run k8s:local:cluster:load-image feed
-mise run k8s:local:cluster:load-image collector
-mise run k8s:local:cluster:load-image web
-
-# 4. Kubernetesリソースのデプロイ
-mise run k8s:local:deploy
-
-# 5. ポートフォワード
-mise run k8s:local:forward
+# 2. ローカル環境の起動（クラスタ作成〜ポートフォワードまで一括実行）
+mise run k8s:local:start
 ```
