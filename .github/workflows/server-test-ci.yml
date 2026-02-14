@@ -1,0 +1,28 @@
+name: Server Test CI
+
+on:
+  pull_request:
+    paths:
+      - 'server/**'
+      - '.mise-tasks/server/test'
+      - '.github/workflows/server-test-ci.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - '.mise-tasks/server/test'
+      - '.github/workflows/server-test-ci.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup mise
+        uses: jdx/mise-action@v2
+
+      - name: Run server API tests
+        run: mise run server:test

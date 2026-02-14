@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#MISE description="Run API tests with hurl against server services"
+#MISE depends=["go:build"]
+set -euo pipefail
+
+FEED_PORT=50052
+COLLECTOR_PORT=50053
+BFF_PORT=8080
+
+PIDS=()
+
+cleanup() {
+  echo "Cleaning up background processes..."
+  for pid in "${PIDS[@]}"; do
+    if kill -0 "$pid" 2>/dev/null; then
+      kill "$pid" 2>/dev/null || true
+      wait "$pid" 2>/dev/null || true
+    fi
+  done
+}
+trap cleanup EXIT
+
+echo "Starting feed service on port ${FEED_PORT}..."
+FEED_SERVICE_PORT="${FEED_PORT}" server/feed/bin/server &
+PIDS+=($!)
+
+echo "Starting collector service on port ${COLLECTOR_PORT}..."
+COLLECTOR_SERVICE_PORT="${COLLECTOR_PORT}" server/collector/bin/server &
+PIDS+=($!)
+
+echo "Starting BFF service on port ${BFF_PORT}..."
+BFF_HTTP_PORT="${BFF_PORT}" \
+  FEED_SERVICE_ADDR="localhost:${FEED_PORT}" \
+  COLLECTOR_SERVICE_ADDR="localhost:${COLLECTOR_PORT}" \
+  server/bff/bin/server &
+PIDS+=($!)
+
+echo "Waiting for BFF to be ready..."
+TIMEOUT=30
+ELAPSED=0
+until curl -sf "http://localhost:${BFF_PORT}/api/v1/feeds/health" > /dev/null 2>&1; do
+  if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
+    echo "Timeout: BFF did not become ready within ${TIMEOUT}s"
+    exit 1
+  fi
+  sleep 1
+  ELAPSED=$((ELAPSED + 1))
+done
+echo "BFF is ready."
+
+echo "Running hurl tests..."
+mise exec -- hurl --variable "bff_port=${BFF_PORT}" --test server/test/*.hurl

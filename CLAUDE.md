@@ -24,6 +24,18 @@ mise exec -- buf generate
 mise exec -- kubectl get pods
 ```
 
+## mise ツールバージョン管理
+
+`.mise.toml` でツールのバージョンを指定する際は、`latest` を使わず具体的なバージョン番号を指定してください。
+
+```toml
+# ❌ latest は使わない
+go = "latest"
+
+# ✅ 具体的なバージョンを指定
+go = "1.25.5"
+```
+
 ## mise File Tasks
 
 タスク定義は @.mise-tasks/ に配置されています。

@@ -57,3 +57,12 @@ mise tasks | grep go
 ```bash
 mise run proto:generate
 ```
+
+### APIテスト
+[hurl](https://hurl.dev/) を使用して、BFF grpc-gateway が公開する REST API エンドポイントに対する統合テストを実行できます。全サービスのビルド・起動からテスト実行・クリーンアップまで一括で行います。
+
+```bash
+mise run server:test
+```
+
+テストファイルは [test/](test/) ディレクトリに配置されています。
