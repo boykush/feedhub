@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Test all Go services"
+#MISE depends=["go:test:feed", "go:test:collector", "go:test:bff"]

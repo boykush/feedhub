@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Build and load all Docker images to kind cluster"
+#MISE depends=["k8s:local:cluster:load-image:bff", "k8s:local:cluster:load-image:feed", "k8s:local:cluster:load-image:collector", "k8s:local:cluster:load-image:web"]

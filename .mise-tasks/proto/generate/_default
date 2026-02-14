@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Generate proto code for all services"
+#MISE depends=["proto:generate:feed", "proto:generate:collector", "proto:generate:bff"]

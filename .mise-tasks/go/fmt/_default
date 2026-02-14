@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Format all Go services"
+#MISE depends=["go:fmt:feed", "go:fmt:collector", "go:fmt:bff"]

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Lint all Go services"
+#MISE depends=["go:lint:feed", "go:lint:collector", "go:lint:bff"]
