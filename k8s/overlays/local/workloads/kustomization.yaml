@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - bff
   - transaction
+  - frontend
   - istio
   - minio
