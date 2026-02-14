@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 #MISE description="Run tests for bff service"
-
-cd services/bff || exit 1
+#MISE dir="services/bff"
 go test ./...

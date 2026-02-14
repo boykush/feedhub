@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 #MISE description="Build feed service"
 #MISE depends=["proto:generate:feed"]
-
-cd services/feed || exit 1
+#MISE dir="services/feed"
 go build -o bin/server ./cmd/server

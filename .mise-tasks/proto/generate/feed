@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 #MISE description="Generate proto code for feed service"
-
-cd services/feed || exit 1
+#MISE dir="services/feed"
 buf generate

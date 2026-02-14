@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 #MISE description="Build Next.js application"
-
-cd services/web || exit 1
+#MISE dir="services/web"
 npm run build

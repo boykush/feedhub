@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 #MISE description="Generate proto code for collector service"
-
-cd services/collector || exit 1
+#MISE dir="services/collector"
 buf generate
