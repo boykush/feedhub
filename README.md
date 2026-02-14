@@ -66,10 +66,7 @@ mise install
 mise run k8s:local:cluster:create
 
 # 3. Dockerイメージのビルドとロード
-mise run k8s:local:cluster:load-image bff
-mise run k8s:local:cluster:load-image feed
-mise run k8s:local:cluster:load-image collector
-mise run k8s:local:cluster:load-image web
+mise run k8s:local:cluster:load-image
 
 # 4. Kubernetesリソースのデプロイ
 mise run k8s:local:deploy
