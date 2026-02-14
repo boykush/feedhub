@@ -6,11 +6,11 @@ RSSフィードを収集・閲覧できる個人向けWebアプリケーショ�
 
 ```
 foresee/
-├── services/          # マイクロサービス群
+├── server/            # バックエンドサービス群 (Go, gRPC)
 │   ├── bff/          # Backend for Frontend (gRPC Gateway)
 │   ├── feed/         # フィード読み取りサービス
-│   ├── collector/    # RSS収集サービス
-│   └── web/          # フロントエンド (Next.js)
+│   └── collector/    # RSS収集サービス
+├── web/              # フロントエンド (Next.js)
 ├── k8s/              # Kubernetesマニフェスト
 │   ├── base/         # ベースマニフェスト
 │   └── overlays/     # 環境別設定（local）
@@ -18,7 +18,8 @@ foresee/
 ```
 
 詳細は各ディレクトリのREADMEを参照してください：
-- [services/README.md](services/README.md) - マイクロサービスアーキテクチャとサービス一覧
+- [server/README.md](server/README.md) - バックエンドサービスのアーキテクチャと開発ガイド
+- [web/README.md](web/README.md) - フロントエンドの開発ガイド
 - [k8s/README.md](k8s/README.md) - Kubernetesマニフェストの構成と管理
 
 ## 開発環境のセットアップ

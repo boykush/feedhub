@@ -3,14 +3,14 @@ name: Feed CI
 on:
   pull_request:
     paths:
-      - 'services/feed/**'
+      - 'server/feed/**'
       - '.github/workflows/feed-ci.yml'
       - '.github/actions/go-ci/**'
   push:
     branches:
       - main
     paths:
-      - 'services/feed/**'
+      - 'server/feed/**'
       - '.github/workflows/feed-ci.yml'
       - '.github/actions/go-ci/**'
 

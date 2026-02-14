@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package collector.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/boykush/foresee/server/collector/gen/go/collector/v1;collectorv1";
+
+// AddFeedRequest is the request for adding a new RSS feed
+message AddFeedRequest {
+  string url = 1;
+}
+
+// AddFeedResponse is the response for adding a new RSS feed
+message AddFeedResponse {
+  string feed_id = 1;
+  string title = 2;
+}
+
+// SyncFeedsRequest is the request for syncing all feeds
+message SyncFeedsRequest {}
+
+// SyncFeedsResponse is the response for syncing all feeds
+message SyncFeedsResponse {
+  int32 synced_count = 1;
+}
+
+// HealthCheckRequest is the request for health check
+message HealthCheckRequest {
+  string service = 1;
+}
+
+// HealthCheckResponse is the response for health check
+message HealthCheckResponse {
+  enum ServingStatus {
+    UNKNOWN = 0;
+    SERVING = 1;
+    NOT_SERVING = 2;
+    SERVICE_UNKNOWN = 3;
+  }
+  ServingStatus status = 1;
+}
+
+// CollectorService manages RSS feed collection and storage
+service CollectorService {
+  // HealthCheck checks if the service is healthy
+  rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/collector/health"
+    };
+  }
+  // AddFeed adds a new RSS feed and fetches its articles
+  rpc AddFeed(AddFeedRequest) returns (AddFeedResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/collector/feeds"
+      body: "*"
+    };
+  }
+  // SyncFeeds syncs all registered feeds and fetches new articles
+  rpc SyncFeeds(SyncFeedsRequest) returns (SyncFeedsResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/collector/sync"
+      body: "*"
+    };
+  }
+}

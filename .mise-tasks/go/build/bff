@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 #MISE description="Build bff service"
 #MISE depends=["proto:generate:bff"]
-#MISE dir="services/bff"
+#MISE dir="server/bff"
 go build -o bin/server ./cmd/server
