@@ -7,4 +7,8 @@ kustomize = "latest"
 jq = "latest"
 mc = "latest"
 grpcurl = "latest"
+pnpm = "10.29.3"
 "go:github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway" = "v2.24.0"
+
+[hooks]
+postinstall = "cd web && pnpm install"
