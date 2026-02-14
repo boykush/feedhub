@@ -533,8 +533,8 @@ const file_feed_feed_proto_rawDesc = "" +
 	"\vFeedService\x12f\n" +
 	"\vHealthCheck\x12\x1b.feed.v1.HealthCheckRequest\x1a\x1c.feed.v1.HealthCheckResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/api/v1/feeds/health\x12Y\n" +
 	"\tListFeeds\x12\x19.feed.v1.ListFeedsRequest\x1a\x1a.feed.v1.ListFeedsResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/feeds\x12e\n" +
-	"\fListArticles\x12\x1c.feed.v1.ListArticlesRequest\x1a\x1d.feed.v1.ListArticlesResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/articlesB\x91\x01\n" +
-	"\vcom.feed.v1B\tFeedProtoP\x01Z:github.com/boykush/foresee/server/bff/gen/go/feed;feedv1\xa2\x02\x03FXX\xaa\x02\aFeed.V1\xca\x02\aFeed\\V1\xe2\x02\x13Feed\\V1\\GPBMetadata\xea\x02\bFeed::V1b\x06proto3"
+	"\fListArticles\x12\x1c.feed.v1.ListArticlesRequest\x1a\x1d.feed.v1.ListArticlesResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/articlesB\x8f\x01\n" +
+	"\vcom.feed.v1B\tFeedProtoP\x01Z8github.com/boykush/foresee/server/bff/gen/go/feed;feedv1\xa2\x02\x03FXX\xaa\x02\aFeed.V1\xca\x02\aFeed\\V1\xe2\x02\x13Feed\\V1\\GPBMetadata\xea\x02\bFeed::V1b\x06proto3"
 
 var (
 	file_feed_feed_proto_rawDescOnce sync.Once

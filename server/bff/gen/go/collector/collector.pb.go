@@ -369,8 +369,8 @@ const file_collector_collector_proto_rawDesc = "" +
 	"\x10CollectorService\x12t\n" +
 	"\vHealthCheck\x12 .collector.v1.HealthCheckRequest\x1a!.collector.v1.HealthCheckResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/collector/health\x12j\n" +
 	"\aAddFeed\x12\x1c.collector.v1.AddFeedRequest\x1a\x1d.collector.v1.AddFeedResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v1/collector/feeds\x12o\n" +
-	"\tSyncFeeds\x12\x1e.collector.v1.SyncFeedsRequest\x1a\x1f.collector.v1.SyncFeedsResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v1/collector/syncB\xb9\x01\n" +
-	"\x10com.collector.v1B\x0eCollectorProtoP\x01ZDgithub.com/boykush/foresee/server/bff/gen/go/collector;collectorv1\xa2\x02\x03CXX\xaa\x02\fCollector.V1\xca\x02\fCollector\\V1\xe2\x02\x18Collector\\V1\\GPBMetadata\xea\x02\rCollector::V1b\x06proto3"
+	"\tSyncFeeds\x12\x1e.collector.v1.SyncFeedsRequest\x1a\x1f.collector.v1.SyncFeedsResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v1/collector/syncB\xb7\x01\n" +
+	"\x10com.collector.v1B\x0eCollectorProtoP\x01ZBgithub.com/boykush/foresee/server/bff/gen/go/collector;collectorv1\xa2\x02\x03CXX\xaa\x02\fCollector.V1\xca\x02\fCollector\\V1\xe2\x02\x18Collector\\V1\\GPBMetadata\xea\x02\rCollector::V1b\x06proto3"
 
 var (
 	file_collector_collector_proto_rawDescOnce sync.Once
