@@ -1,6 +1,6 @@
 # Web
 
-Foreseeアプリケーションのフロントエンドです。Next.js App Routerで構築されています。
+Feedhubアプリケーションのフロントエンドです。Next.js App Routerで構築されています。
 
 ## 概要
 

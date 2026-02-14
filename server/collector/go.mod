@@ -1,4 +1,4 @@
-module github.com/boykush/foresee/server/collector
+module github.com/boykush/feedhub/server/collector
 
 go 1.25.5
 

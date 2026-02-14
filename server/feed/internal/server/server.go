@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	feedv1 "github.com/boykush/foresee/server/feed/gen/go"
+	feedv1 "github.com/boykush/feedhub/server/feed/gen/go"
 )
 
 type Server struct {

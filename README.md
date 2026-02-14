@@ -1,11 +1,11 @@
-# Foresee
+# Feedhub
 
 RSSフィードを収集・閲覧できる個人向けWebアプリケーション。マイクロサービスアーキテクチャで構築されています。
 
 ## プロジェクト構成
 
 ```
-foresee/
+feedhub/
 ├── server/            # バックエンドサービス群 (Go, gRPC)
 │   ├── bff/          # Backend for Frontend (gRPC Gateway)
 │   ├── feed/         # フィード読み取りサービス

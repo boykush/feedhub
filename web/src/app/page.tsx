@@ -11,7 +11,7 @@ export default async function Home() {
 	return (
 		<div className="py-10">
 			<div className="text-center mb-10">
-				<h1 className="text-3xl font-bold mb-2">Foresee - RSS Feed Reader</h1>
+				<h1 className="text-3xl font-bold mb-2">Feedhub - RSS Feed Reader</h1>
 				<p className="text-gray-600">Service Health Status</p>
 			</div>
 

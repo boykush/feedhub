@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 
-	collectorv1 "github.com/boykush/foresee/server/collector/gen/go"
+	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
 )
 
 type Server struct {

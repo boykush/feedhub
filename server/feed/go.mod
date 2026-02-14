@@ -1,4 +1,4 @@
-module github.com/boykush/foresee/server/feed
+module github.com/boykush/feedhub/server/feed
 
 go 1.25.5
 

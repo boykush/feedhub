@@ -369,7 +369,7 @@ const file_collector_proto_rawDesc = "" +
 	"\vHealthCheck\x12 .collector.v1.HealthCheckRequest\x1a!.collector.v1.HealthCheckResponse\x12F\n" +
 	"\aAddFeed\x12\x1c.collector.v1.AddFeedRequest\x1a\x1d.collector.v1.AddFeedResponse\x12L\n" +
 	"\tSyncFeeds\x12\x1e.collector.v1.SyncFeedsRequest\x1a\x1f.collector.v1.SyncFeedsResponseB\xb3\x01\n" +
-	"\x10com.collector.v1B\x0eCollectorProtoP\x01Z>github.com/boykush/foresee/server/collector/gen/go;collectorv1\xa2\x02\x03CXX\xaa\x02\fCollector.V1\xca\x02\fCollector\\V1\xe2\x02\x18Collector\\V1\\GPBMetadata\xea\x02\rCollector::V1b\x06proto3"
+	"\x10com.collector.v1B\x0eCollectorProtoP\x01Z>github.com/boykush/feedhub/server/collector/gen/go;collectorv1\xa2\x02\x03CXX\xaa\x02\fCollector.V1\xca\x02\fCollector\\V1\xe2\x02\x18Collector\\V1\\GPBMetadata\xea\x02\rCollector::V1b\x06proto3"
 
 var (
 	file_collector_proto_rawDescOnce sync.Once
