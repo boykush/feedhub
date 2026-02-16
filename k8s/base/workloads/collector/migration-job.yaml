@@ -11,8 +11,5 @@ spec:
       containers:
       - name: migrate
         image: collector-migration:latest
-        env:
-        - name: DATABASE_URL
-          value: postgres://feedhub:feedhub-local-password@postgres-rw:5432/collector_db?sslmode=disable
       restartPolicy: Never
   backoffLimit: 3

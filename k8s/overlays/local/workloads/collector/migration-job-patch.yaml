@@ -9,3 +9,6 @@ spec:
         - name: migrate
           image: collector-migration:latest
           imagePullPolicy: Never
+          env:
+          - name: DATABASE_URL
+            value: postgres://feedhub:feedhub-local-password@postgres-rw:5432/collector_db?sslmode=disable
