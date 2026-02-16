@@ -1,4 +1,4 @@
 FROM arigaio/atlas:latest
 COPY migrations /migrations
 COPY atlas.hcl /atlas.hcl
-ENTRYPOINT ["atlas", "migrate", "apply", "--env", "local"]
+ENTRYPOINT ["/atlas", "migrate", "apply", "--env", "local"]
