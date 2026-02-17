@@ -9,7 +9,9 @@ import (
 	"syscall"
 
 	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
+	"github.com/boykush/feedhub/server/collector/internal/infra/ent"
 	"github.com/boykush/feedhub/server/collector/internal/server"
+	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -22,13 +24,24 @@ func main() {
 		port = defaultPort
 	}
 
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		log.Fatal("DATABASE_URL environment variable is required")
+	}
+
+	client, err := ent.Open("postgres", databaseURL)
+	if err != nil {
+		log.Fatalf("failed to open database connection: %v", err)
+	}
+	defer client.Close()
+
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
 	grpcServer := grpc.NewServer()
-	collectorv1.RegisterCollectorServiceServer(grpcServer, server.NewServer())
+	collectorv1.RegisterCollectorServiceServer(grpcServer, server.NewServer(client))
 	reflection.Register(grpcServer)
 
 	log.Printf("Starting gRPC server on port %s", port)
