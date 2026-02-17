@@ -6,3 +6,4 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - authorizationpolicy.yaml
+  - migration-job.yaml
