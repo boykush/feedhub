@@ -4,14 +4,16 @@ import (
 	"context"
 
 	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
+	"github.com/boykush/feedhub/server/collector/internal/infra/ent"
 )
 
 type Server struct {
 	collectorv1.UnimplementedCollectorServiceServer
+	client *ent.Client
 }
 
-func NewServer() *Server {
-	return &Server{}
+func NewServer(client *ent.Client) *Server {
+	return &Server{client: client}
 }
 
 func (s *Server) HealthCheck(ctx context.Context, req *collectorv1.HealthCheckRequest) (*collectorv1.HealthCheckResponse, error) {
