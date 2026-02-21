@@ -72,6 +72,9 @@ jobs:
         uses: actions/checkout@v4
 
       - if: matrix.changed == 'true'
+        uses: docker/setup-qemu-action@v3
+
+      - if: matrix.changed == 'true'
         uses: docker/setup-buildx-action@v3
 
       - if: matrix.changed == 'true'
@@ -87,6 +90,7 @@ jobs:
           context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ needs.changes.outputs.sha_short }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
