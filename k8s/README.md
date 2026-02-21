@@ -46,31 +46,34 @@ k8s/
 - **base/**: 環境に依存しない共通のマニフェスト
 - **overlays/**: 環境ごとの設定（現在はlocalのみ）
 
+## CD パイプライン
+
+mainブランチへのpush時に、変更があったサービスのDockerイメージをGHCR（GitHub Container Registry）にビルド・プッシュし、kustomize imagesでbase kustomization.yamlのイメージタグを自動更新します。ArgoCD自動syncでデプロイまで完結します。
+
 ## ローカル開発
 
-### クラスタの作成
+### 一括セットアップ
 ```bash
+# クラスタ作成、プラットフォームデプロイ、ポートフォワードまで一括実行
+mise run k8s:local:start
+```
+
+### 個別操作
+```bash
+# クラスタの作成
 mise run k8s:local:cluster:create
-```
 
-### プラットフォームリソースのデプロイ
-```bash
+# プラットフォームリソースのデプロイ（ArgoCD, Istio等）
 mise run k8s:local:deploy-platform
-```
 
-### アプリケーションのデプロイ
-```bash
-# Dockerイメージのビルドとロード
-mise run k8s:local:cluster:load-image
+# ポートフォワード
+mise run k8s:local:forward
 
-# 全リソースのデプロイ（platform + workloads）
-mise run k8s:local:deploy
-```
-
-### クラスタの削除
-```bash
+# クラスタの削除
 mise run k8s:local:cluster:delete
 ```
+
+workloadsのデプロイはArgoCD自動syncで行われるため、手動デプロイは不要です。
 
 ## 利用可能なコマンド
 ```bash
