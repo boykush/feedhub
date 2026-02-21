@@ -6,7 +6,10 @@ import { addFeed } from "../../lib/api";
 export default function AddFeedPage() {
 	const [url, setUrl] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [result, setResult] = useState<{ feedId: string; title: string } | null>(null);
+	const [result, setResult] = useState<{
+		feedId: string;
+		title: string;
+	} | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -30,9 +33,15 @@ export default function AddFeedPage() {
 		<div className="max-w-2xl mx-auto">
 			<h1 className="text-2xl font-bold mb-6">Add Feed</h1>
 
-			<form onSubmit={handleSubmit} className="bg-white rounded-lg border border-gray-200 p-6">
+			<form
+				onSubmit={handleSubmit}
+				className="bg-white rounded-lg border border-gray-200 p-6"
+			>
 				<div className="mb-4">
-					<label htmlFor="feed-url" className="block text-sm font-medium text-gray-700 mb-2">
+					<label
+						htmlFor="feed-url"
+						className="block text-sm font-medium text-gray-700 mb-2"
+					>
 						Feed URL
 					</label>
 					<input
@@ -58,7 +67,9 @@ export default function AddFeedPage() {
 				<div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
 					<p className="font-medium text-green-800">Feed added successfully</p>
 					<p className="text-sm text-green-700 mt-1">Title: {result.title}</p>
-					<p className="text-sm text-green-700 font-mono">ID: {result.feedId}</p>
+					<p className="text-sm text-green-700 font-mono">
+						ID: {result.feedId}
+					</p>
 				</div>
 			)}
 

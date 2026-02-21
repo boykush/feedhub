@@ -20,7 +20,10 @@ export default function RootLayout({
 							<a href="/" className="text-xl font-bold text-blue-600">
 								Feedhub
 							</a>
-							<a href="/feeds/add" className="text-sm text-gray-600 hover:text-gray-900">
+							<a
+								href="/feeds/add"
+								className="text-sm text-gray-600 hover:text-gray-900"
+							>
 								Add Feed
 							</a>
 						</nav>
