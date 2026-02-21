@@ -24,3 +24,7 @@ patches:
     target:
       kind: Deployment
       name: web-service
+  - path: istio/gateway-patch.yaml
+    target:
+      kind: Gateway
+      name: feedhub-gateway
