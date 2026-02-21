@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "Feedhub",
-	description: "A personal RSS feed reader",
+	description: "Personal RSS feed reader",
 };
 
 export default function RootLayout({

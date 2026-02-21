@@ -60,6 +60,6 @@ func main() {
 	}()
 
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("Collector server failed to serve: %v", err)
 	}
 }

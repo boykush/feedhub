@@ -42,6 +42,6 @@ func main() {
 	}()
 
 	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("Feed server failed to serve: %v", err)
 	}
 }

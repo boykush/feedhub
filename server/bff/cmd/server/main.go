@@ -77,7 +77,7 @@ func run() error {
 		log.Printf("HTTP server shutdown error: %v", err)
 	}
 
-	log.Println("Server stopped")
+	log.Println("BFF server stopped")
 	return nil
 }
 
