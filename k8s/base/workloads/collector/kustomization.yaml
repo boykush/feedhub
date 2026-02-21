@@ -10,7 +10,7 @@ resources:
 images:
 - name: collector-migration
   newName: ghcr.io/boykush/feedhub/collector-migration
-  newTag: 8e3f77e
+  newTag: 24e3d42
 - name: collector-service
   newName: ghcr.io/boykush/feedhub/collector-service
-  newTag: 8e3f77e
+  newTag: 24e3d42
