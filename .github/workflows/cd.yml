@@ -133,5 +133,6 @@ jobs:
             echo "No manifest changes to commit"
           else
             git commit -m "chore: update image tags to ${GITHUB_SHA::7}"
+            git pull --rebase origin main
             git push
           fi
