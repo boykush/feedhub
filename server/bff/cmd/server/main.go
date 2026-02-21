@@ -59,7 +59,7 @@ func run() error {
 	}
 
 	go func() {
-		log.Printf("Starting HTTP server on port %s", httpPort)
+		log.Printf("Starting BFF server on port %s", httpPort)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Printf("HTTP server error: %v", err)
 		}
