@@ -3,7 +3,9 @@
 
 set -e
 
-mise run k8s:local:cluster:create
+if ! kind get clusters 2>/dev/null | grep -q '^feedhub$'; then
+  mise run k8s:local:cluster:create
+fi
 mise run k8s:local:cluster:load-image
 mise run k8s:local:deploy
 mise run k8s:local:forward

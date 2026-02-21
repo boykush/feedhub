@@ -4,3 +4,7 @@
 
 echo "Deploying workload resources for local environment..."
 kubectl apply -k k8s/overlays/local/workloads
+
+echo "Restarting deployments to pick up new images..."
+kubectl rollout restart deployment -n default
+kubectl rollout status deployment -n default --timeout=120s
