@@ -1,5 +1,6 @@
 # Build artifacts
 bin/
+server/*/server
 
 # mise local configuration (contains secrets)
 .mise.local.toml
