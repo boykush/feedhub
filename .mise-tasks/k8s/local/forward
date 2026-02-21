@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-#MISE description="Port forward to BFF and Web"
+#MISE description="Port forward to Istio IngressGateway"
 
+pkill -f "kubectl port-forward.*istio-ingressgateway" 2>/dev/null
 pkill -f "kubectl port-forward.*bff" 2>/dev/null
 pkill -f "kubectl port-forward.*web" 2>/dev/null
 
-kubectl port-forward svc/bff-service -n default 8080:8080 &>/dev/null &
-kubectl port-forward svc/web-service -n default 3000:3000 &>/dev/null &
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:8080 &>/dev/null &
 
-echo "BFF API: http://localhost:8080"
-echo "Web:     http://localhost:3000"
+echo "App: http://localhost:8080"
