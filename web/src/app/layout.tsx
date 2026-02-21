@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-	title: "Feedhub - RSS Reader",
+	title: "Feedhub",
 	description: "A personal RSS feed reader",
 };
 

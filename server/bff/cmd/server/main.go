@@ -67,7 +67,7 @@ func run() error {
 
 	// Wait for shutdown signal
 	<-sigCh
-	log.Println("Shutting down server...")
+	log.Println("Shutting down BFF server...")
 
 	// Graceful shutdown
 	shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
