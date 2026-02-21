@@ -1,0 +1,52 @@
+amends "package://github.com/jdx/hk/releases/download/v1.36.0/hk@1.36.0#/Config.pkl"
+
+local linters = new Mapping<String, Step> {
+  // Go format - per service
+  ["go-fmt:bff"] {
+    glob = "server/bff/**/*.go"
+    fix = "mise run go:fmt:bff"
+  }
+  ["go-fmt:feed"] {
+    glob = "server/feed/**/*.go"
+    fix = "mise run go:fmt:feed"
+  }
+  ["go-fmt:collector"] {
+    glob = "server/collector/**/*.go"
+    fix = "mise run go:fmt:collector"
+  }
+
+  // Go lint (vet) - per service
+  ["go-lint:bff"] {
+    glob = "server/bff/**/*.go"
+    check = "mise run go:lint:bff"
+  }
+  ["go-lint:feed"] {
+    glob = "server/feed/**/*.go"
+    check = "mise run go:lint:feed"
+  }
+  ["go-lint:collector"] {
+    glob = "server/collector/**/*.go"
+    check = "mise run go:lint:collector"
+  }
+
+  // Web lint
+  ["web-lint"] {
+    glob = List("web/**/*.ts", "web/**/*.tsx", "web/**/*.js", "web/**/*.jsx")
+    check = "mise run web:lint"
+  }
+}
+
+hooks {
+  ["pre-commit"] {
+    fix = true
+    stash = "git"
+    steps = linters
+  }
+  ["check"] {
+    steps = linters
+  }
+  ["fix"] {
+    fix = true
+    steps = linters
+  }
+}

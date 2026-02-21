@@ -6,7 +6,9 @@ kubectl = "1.32.0"
 pnpm = "10.29.3"
 hurl = "7.1.0"
 atlas = "1.0.0"
+hk = "1.36.0"
+pkl = "0.30.2"
 "go:github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway" = "v2.24.0"
 
 [hooks]
-postinstall = "env -u MISE_TOOL_VERSION mise run web:install"
+postinstall = "env -u MISE_TOOL_VERSION mise run web:install && hk install --mise"
