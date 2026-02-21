@@ -37,3 +37,21 @@ export async function checkHealth(
 		};
 	}
 }
+
+interface AddFeedResult {
+	feedId: string;
+	title: string;
+}
+
+export async function addFeed(url: string): Promise<AddFeedResult> {
+	const res = await fetch(`${API_BASE_URL}/api/v1/collector/feeds`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ url }),
+	});
+	if (!res.ok) {
+		const text = await res.text();
+		throw new Error(text || `HTTP ${res.status}`);
+	}
+	return res.json();
+}
