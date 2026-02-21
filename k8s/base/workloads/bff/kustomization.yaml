@@ -9,4 +9,4 @@ resources:
 images:
 - name: bff-service
   newName: ghcr.io/boykush/feedhub/bff-service
-  newTag: 7bbdc6c
+  newTag: 8e3f77e
