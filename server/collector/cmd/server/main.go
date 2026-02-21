@@ -10,7 +10,9 @@ import (
 
 	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
 	"github.com/boykush/feedhub/server/collector/internal/infra/ent"
+	infrarepo "github.com/boykush/feedhub/server/collector/internal/infra/repository"
 	"github.com/boykush/feedhub/server/collector/internal/server"
+	"github.com/boykush/feedhub/server/collector/internal/usecase"
 	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -40,8 +42,11 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
+	feedRepo := infrarepo.NewFeedRepository(client)
+	addFeedUsecase := usecase.NewAddFeedUsecase(feedRepo)
+
 	grpcServer := grpc.NewServer()
-	collectorv1.RegisterCollectorServiceServer(grpcServer, server.NewServer(client))
+	collectorv1.RegisterCollectorServiceServer(grpcServer, server.NewServer(addFeedUsecase))
 	reflection.Register(grpcServer)
 
 	log.Printf("Starting gRPC server on port %s", port)
