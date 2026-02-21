@@ -49,7 +49,7 @@ func main() {
 	collectorv1.RegisterCollectorServiceServer(grpcServer, server.NewServer(addFeedUsecase))
 	reflection.Register(grpcServer)
 
-	log.Printf("Starting gRPC server on port %s", port)
+	log.Printf("Starting Collector server on port %s", port)
 
 	go func() {
 		sigCh := make(chan os.Signal, 1)

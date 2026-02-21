@@ -31,7 +31,7 @@ func main() {
 	feedv1.RegisterFeedServiceServer(grpcServer, server.NewServer())
 	reflection.Register(grpcServer)
 
-	log.Printf("Starting gRPC server on port %s", port)
+	log.Printf("Starting Feed server on port %s", port)
 
 	go func() {
 		sigCh := make(chan os.Signal, 1)
