@@ -1,0 +1,137 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - 'web/**'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      bff: ${{ steps.filter.outputs.bff }}
+      feed: ${{ steps.filter.outputs.feed }}
+      collector: ${{ steps.filter.outputs.collector }}
+      web: ${{ steps.filter.outputs.web }}
+      sha_short: ${{ steps.sha.outputs.short }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            bff:
+              - 'server/bff/**'
+            feed:
+              - 'server/feed/**'
+            collector:
+              - 'server/collector/**'
+            web:
+              - 'web/**'
+
+      - name: Set short SHA
+        id: sha
+        run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+  build-and-push:
+    needs: changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - service: bff-service
+            context: server/bff
+            dockerfile: server/bff/Dockerfile
+            changed: ${{ needs.changes.outputs.bff }}
+          - service: feed-service
+            context: server/feed
+            dockerfile: server/feed/Dockerfile
+            changed: ${{ needs.changes.outputs.feed }}
+          - service: collector-service
+            context: server/collector
+            dockerfile: server/collector/Dockerfile
+            changed: ${{ needs.changes.outputs.collector }}
+          - service: collector-migration
+            context: server/collector
+            dockerfile: server/collector/Dockerfile.migrate
+            changed: ${{ needs.changes.outputs.collector }}
+          - service: web-service
+            context: web
+            dockerfile: web/Dockerfile
+            changed: ${{ needs.changes.outputs.web }}
+    steps:
+      - if: matrix.changed == 'true'
+        uses: actions/checkout@v4
+
+      - if: matrix.changed == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - if: matrix.changed == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: matrix.changed == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ needs.changes.outputs.sha_short }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  update-manifests:
+    needs: [changes, build-and-push]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: imranismail/setup-kustomize@v2
+
+      - name: Update BFF image
+        if: needs.changes.outputs.bff == 'true'
+        run: |
+          cd k8s/base/workloads/bff
+          kustomize edit set image bff-service=ghcr.io/${{ github.repository }}/bff-service:${{ needs.changes.outputs.sha_short }}
+
+      - name: Update Feed image
+        if: needs.changes.outputs.feed == 'true'
+        run: |
+          cd k8s/base/workloads/feed
+          kustomize edit set image feed-service=ghcr.io/${{ github.repository }}/feed-service:${{ needs.changes.outputs.sha_short }}
+
+      - name: Update Collector images
+        if: needs.changes.outputs.collector == 'true'
+        run: |
+          cd k8s/base/workloads/collector
+          kustomize edit set image collector-service=ghcr.io/${{ github.repository }}/collector-service:${{ needs.changes.outputs.sha_short }}
+          kustomize edit set image collector-migration=ghcr.io/${{ github.repository }}/collector-migration:${{ needs.changes.outputs.sha_short }}
+
+      - name: Update Web image
+        if: needs.changes.outputs.web == 'true'
+        run: |
+          cd k8s/base/workloads/web
+          kustomize edit set image web-service=ghcr.io/${{ github.repository }}/web-service:${{ needs.changes.outputs.sha_short }}
+
+      - name: Commit and push manifest changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add k8s/
+          if git diff --staged --quiet; then
+            echo "No manifest changes to commit"
+          else
+            git commit -m "chore: update image tags to ${GITHUB_SHA::7}"
+            git push
+          fi
