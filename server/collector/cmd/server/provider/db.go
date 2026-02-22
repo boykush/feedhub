@@ -15,7 +15,7 @@ type EntClient struct {
 }
 
 func (c *EntClient) Shutdown() error {
-	return c.Client.Close()
+	return c.Close()
 }
 
 // ProvideEntClient creates a new ent database client.

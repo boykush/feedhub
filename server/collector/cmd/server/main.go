@@ -22,5 +22,8 @@ func main() {
 
 	do.MustInvoke[*provider.GRPCServer](injector)
 
-	injector.ShutdownOnSignals(syscall.SIGTERM, os.Interrupt)
+	_, report := injector.ShutdownOnSignals(syscall.SIGTERM, os.Interrupt)
+	if report != nil && !report.Succeed {
+		log.Fatalf("shutdown error: %v", report)
+	}
 }

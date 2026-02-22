@@ -23,5 +23,8 @@ func main() {
 
 	do.MustInvoke[*http.Server](injector)
 
-	injector.ShutdownOnSignals(syscall.SIGTERM, os.Interrupt)
+	_, report := injector.ShutdownOnSignals(syscall.SIGTERM, os.Interrupt)
+	if report != nil && !report.Succeed {
+		log.Fatalf("shutdown error: %v", report)
+	}
 }
