@@ -7,8 +7,6 @@ spec:
     spec:
       containers:
         - name: collector-service
-          image: collector-service:latest
-          imagePullPolicy: Never
           env:
           - name: DATABASE_URL
             value: postgres://feedhub:feedhub-local-password@postgres-rw:5432/collector_db?sslmode=disable

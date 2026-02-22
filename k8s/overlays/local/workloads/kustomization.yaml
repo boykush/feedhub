@@ -4,26 +4,10 @@ kind: Kustomization
 resources:
   - ../../../base/workloads
 patches:
-  - path: bff/deployment-patch.yaml
-    target:
-      kind: Deployment
-      name: bff-service
-  - path: feed/deployment-patch.yaml
-    target:
-      kind: Deployment
-      name: feed-service
   - path: collector/deployment-patch.yaml
     target:
       kind: Deployment
       name: collector-service
-  - path: collector/migration-job-patch.yaml
-    target:
-      kind: Job
-      name: collector-migration
-  - path: web/deployment-patch.yaml
-    target:
-      kind: Deployment
-      name: web-service
   - path: istio/gateway-patch.yaml
     target:
       kind: Gateway
