@@ -17,6 +17,14 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: istio-system
+  # istiod updates ValidatingWebhookConfiguration at runtime (e.g. caBundle injection),
+  # causing drift from the Helm-defined state
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: istiod-default-validator
+      jsonPointers:
+        - /webhooks
   syncPolicy:
     automated:
       prune: true
