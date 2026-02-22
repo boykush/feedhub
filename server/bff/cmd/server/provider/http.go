@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/samber/do/v2"
 
@@ -34,8 +35,9 @@ func ProvideHTTPServer(i do.Injector) (*http.Server, error) {
 	}
 
 	httpServer := &http.Server{
-		Addr:    fmt.Sprintf(":%s", cfg.HTTPPort),
-		Handler: mux,
+		Addr:              fmt.Sprintf(":%s", cfg.HTTPPort),
+		Handler:           mux,
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 
 	go func() {

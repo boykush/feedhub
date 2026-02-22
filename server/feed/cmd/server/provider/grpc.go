@@ -19,7 +19,7 @@ type GRPCServer struct {
 }
 
 func (s *GRPCServer) Shutdown() error {
-	s.Server.GracefulStop()
+	s.GracefulStop()
 	return nil
 }
 
