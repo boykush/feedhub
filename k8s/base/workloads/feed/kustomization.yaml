@@ -9,4 +9,4 @@ resources:
 images:
 - name: feed-service
   newName: ghcr.io/boykush/feedhub/feed-service
-  newTag: 60dd333
+  newTag: fc1e284
