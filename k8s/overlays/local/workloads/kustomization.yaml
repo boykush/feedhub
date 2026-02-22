@@ -4,10 +4,6 @@ kind: Kustomization
 resources:
   - ../../../base/workloads
 patches:
-  - path: collector/deployment-patch.yaml
-    target:
-      kind: Deployment
-      name: collector-service
   - path: istio/gateway-patch.yaml
     target:
       kind: Gateway

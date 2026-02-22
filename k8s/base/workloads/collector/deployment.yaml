@@ -26,5 +26,7 @@ spec:
           name: grpc
           protocol: TCP
         env:
+        - name: DATABASE_URL
+          value: postgres://feedhub:feedhub-local-password@postgres-rw:5432/collector_db?sslmode=disable
         - name: COLLECTOR_SERVICE_PORT
           value: "50053"
