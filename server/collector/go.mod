@@ -4,6 +4,7 @@ go 1.25.5
 
 require (
 	entgo.io/ent v0.14.5
+	github.com/caarlos0/env/v11 v11.3.1
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.11.2
 	github.com/mmcdole/gofeed v1.3.0
