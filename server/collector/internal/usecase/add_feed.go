@@ -19,6 +19,14 @@ func NewAddFeedUsecase(feedRepo repository.FeedRepository) *AddFeedUsecase {
 }
 
 func (u *AddFeedUsecase) Execute(ctx context.Context, feedURL string) (*model.Feed, error) {
+	exists, err := u.feedRepo.ExistsByURL(ctx, feedURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to check feed existence: %w", err)
+	}
+	if exists {
+		return nil, repository.ErrFeedAlreadyExists
+	}
+
 	parser := gofeed.NewParser()
 	parsed, err := parser.ParseURLWithContext(feedURL, ctx)
 	if err != nil {

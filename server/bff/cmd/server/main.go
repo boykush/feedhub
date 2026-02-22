@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/caarlos0/env/v11"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -25,6 +26,11 @@ func main() {
 }
 
 func run() error {
+	cfg, err := env.ParseAs[config]()
+	if err != nil {
+		return fmt.Errorf("failed to parse environment variables: %w", err)
+	}
+
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
@@ -33,33 +39,28 @@ func run() error {
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
 
-	// Get configuration from environment variables
-	httpPort := getEnv("BFF_HTTP_PORT", "8080")
-	feedServiceAddr := getEnv("FEED_SERVICE_ADDR", "feed-service:50052")
-	collectorServiceAddr := getEnv("COLLECTOR_SERVICE_ADDR", "collector-service:50053")
-
 	// Create gRPC-Gateway mux
 	mux := runtime.NewServeMux()
 
 	// Connect to backend services
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
 
-	if err := feedpb.RegisterFeedServiceHandlerFromEndpoint(ctx, mux, feedServiceAddr, opts); err != nil {
+	if err := feedpb.RegisterFeedServiceHandlerFromEndpoint(ctx, mux, cfg.FeedServiceAddr, opts); err != nil {
 		return fmt.Errorf("failed to register feed service handler: %w", err)
 	}
 
-	if err := collectorpb.RegisterCollectorServiceHandlerFromEndpoint(ctx, mux, collectorServiceAddr, opts); err != nil {
+	if err := collectorpb.RegisterCollectorServiceHandlerFromEndpoint(ctx, mux, cfg.CollectorServiceAddr, opts); err != nil {
 		return fmt.Errorf("failed to register collector service handler: %w", err)
 	}
 
 	// Start HTTP server
 	httpServer := &http.Server{
-		Addr:    fmt.Sprintf(":%s", httpPort),
+		Addr:    fmt.Sprintf(":%s", cfg.HTTPPort),
 		Handler: mux,
 	}
 
 	go func() {
-		log.Printf("Starting BFF server on port %s", httpPort)
+		log.Printf("Starting BFF server on port %s", cfg.HTTPPort)
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Printf("HTTP server error: %v", err)
 		}
@@ -79,11 +80,4 @@ func run() error {
 
 	log.Println("BFF server stopped")
 	return nil
-}
-
-func getEnv(key, defaultValue string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
-	}
-	return defaultValue
 }

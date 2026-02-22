@@ -6,6 +6,7 @@ import (
 	"github.com/boykush/feedhub/server/collector/internal/domain/model"
 	domainrepo "github.com/boykush/feedhub/server/collector/internal/domain/repository"
 	"github.com/boykush/feedhub/server/collector/internal/infra/ent"
+	"github.com/boykush/feedhub/server/collector/internal/infra/ent/feed"
 )
 
 type feedRepository struct {
@@ -14,6 +15,10 @@ type feedRepository struct {
 
 func NewFeedRepository(client *ent.Client) domainrepo.FeedRepository {
 	return &feedRepository{client: client}
+}
+
+func (r *feedRepository) ExistsByURL(ctx context.Context, url string) (bool, error) {
+	return r.client.Feed.Query().Where(feed.URLEQ(url)).Exist(ctx)
 }
 
 func (r *feedRepository) Save(ctx context.Context, url, title string) (*model.Feed, error) {

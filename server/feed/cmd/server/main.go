@@ -10,19 +10,18 @@ import (
 
 	feedv1 "github.com/boykush/feedhub/server/feed/gen/go"
 	"github.com/boykush/feedhub/server/feed/internal/server"
+	"github.com/caarlos0/env/v11"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
 
-const defaultPort = "50052"
-
 func main() {
-	port := os.Getenv("FEED_SERVICE_PORT")
-	if port == "" {
-		port = defaultPort
+	cfg, err := env.ParseAs[config]()
+	if err != nil {
+		log.Fatalf("failed to parse environment variables: %v", err)
 	}
 
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", cfg.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -31,7 +30,7 @@ func main() {
 	feedv1.RegisterFeedServiceServer(grpcServer, server.NewServer())
 	reflection.Register(grpcServer)
 
-	log.Printf("Starting Feed server on port %s", port)
+	log.Printf("Starting Feed server on port %s", cfg.Port)
 
 	go func() {
 		sigCh := make(chan os.Signal, 1)
