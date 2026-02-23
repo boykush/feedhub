@@ -71,105 +71,7 @@ func (x HealthCheckResponse_ServingStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HealthCheckResponse_ServingStatus.Descriptor instead.
 func (HealthCheckResponse_ServingStatus) EnumDescriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{5, 0}
-}
-
-// AddFeedRequest is the request for adding a new RSS feed
-type AddFeedRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddFeedRequest) Reset() {
-	*x = AddFeedRequest{}
-	mi := &file_collector_collector_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddFeedRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddFeedRequest) ProtoMessage() {}
-
-func (x *AddFeedRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddFeedRequest.ProtoReflect.Descriptor instead.
-func (*AddFeedRequest) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *AddFeedRequest) GetUrl() string {
-	if x != nil {
-		return x.Url
-	}
-	return ""
-}
-
-// AddFeedResponse is the response for adding a new RSS feed
-type AddFeedResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	FeedId        string                 `protobuf:"bytes,1,opt,name=feed_id,json=feedId,proto3" json:"feed_id,omitempty"`
-	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddFeedResponse) Reset() {
-	*x = AddFeedResponse{}
-	mi := &file_collector_collector_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddFeedResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddFeedResponse) ProtoMessage() {}
-
-func (x *AddFeedResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddFeedResponse.ProtoReflect.Descriptor instead.
-func (*AddFeedResponse) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *AddFeedResponse) GetFeedId() string {
-	if x != nil {
-		return x.FeedId
-	}
-	return ""
-}
-
-func (x *AddFeedResponse) GetTitle() string {
-	if x != nil {
-		return x.Title
-	}
-	return ""
+	return file_collector_collector_proto_rawDescGZIP(), []int{3, 0}
 }
 
 // SyncFeedsRequest is the request for syncing all feeds
@@ -181,7 +83,7 @@ type SyncFeedsRequest struct {
 
 func (x *SyncFeedsRequest) Reset() {
 	*x = SyncFeedsRequest{}
-	mi := &file_collector_collector_proto_msgTypes[2]
+	mi := &file_collector_collector_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -193,7 +95,7 @@ func (x *SyncFeedsRequest) String() string {
 func (*SyncFeedsRequest) ProtoMessage() {}
 
 func (x *SyncFeedsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[2]
+	mi := &file_collector_collector_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -206,7 +108,7 @@ func (x *SyncFeedsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncFeedsRequest.ProtoReflect.Descriptor instead.
 func (*SyncFeedsRequest) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{2}
+	return file_collector_collector_proto_rawDescGZIP(), []int{0}
 }
 
 // SyncFeedsResponse is the response for syncing all feeds
@@ -219,7 +121,7 @@ type SyncFeedsResponse struct {
 
 func (x *SyncFeedsResponse) Reset() {
 	*x = SyncFeedsResponse{}
-	mi := &file_collector_collector_proto_msgTypes[3]
+	mi := &file_collector_collector_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -231,7 +133,7 @@ func (x *SyncFeedsResponse) String() string {
 func (*SyncFeedsResponse) ProtoMessage() {}
 
 func (x *SyncFeedsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[3]
+	mi := &file_collector_collector_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -244,7 +146,7 @@ func (x *SyncFeedsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SyncFeedsResponse.ProtoReflect.Descriptor instead.
 func (*SyncFeedsResponse) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{3}
+	return file_collector_collector_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SyncFeedsResponse) GetSyncedCount() int32 {
@@ -264,7 +166,7 @@ type HealthCheckRequest struct {
 
 func (x *HealthCheckRequest) Reset() {
 	*x = HealthCheckRequest{}
-	mi := &file_collector_collector_proto_msgTypes[4]
+	mi := &file_collector_collector_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -276,7 +178,7 @@ func (x *HealthCheckRequest) String() string {
 func (*HealthCheckRequest) ProtoMessage() {}
 
 func (x *HealthCheckRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[4]
+	mi := &file_collector_collector_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -289,7 +191,7 @@ func (x *HealthCheckRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthCheckRequest.ProtoReflect.Descriptor instead.
 func (*HealthCheckRequest) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{4}
+	return file_collector_collector_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *HealthCheckRequest) GetService() string {
@@ -309,7 +211,7 @@ type HealthCheckResponse struct {
 
 func (x *HealthCheckResponse) Reset() {
 	*x = HealthCheckResponse{}
-	mi := &file_collector_collector_proto_msgTypes[5]
+	mi := &file_collector_collector_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -321,7 +223,7 @@ func (x *HealthCheckResponse) String() string {
 func (*HealthCheckResponse) ProtoMessage() {}
 
 func (x *HealthCheckResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_collector_collector_proto_msgTypes[5]
+	mi := &file_collector_collector_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -334,7 +236,7 @@ func (x *HealthCheckResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HealthCheckResponse.ProtoReflect.Descriptor instead.
 func (*HealthCheckResponse) Descriptor() ([]byte, []int) {
-	return file_collector_collector_proto_rawDescGZIP(), []int{5}
+	return file_collector_collector_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *HealthCheckResponse) GetStatus() HealthCheckResponse_ServingStatus {
@@ -348,12 +250,7 @@ var File_collector_collector_proto protoreflect.FileDescriptor
 
 const file_collector_collector_proto_rawDesc = "" +
 	"\n" +
-	"\x19collector/collector.proto\x12\fcollector.v1\x1a\x1cgoogle/api/annotations.proto\"\"\n" +
-	"\x0eAddFeedRequest\x12\x10\n" +
-	"\x03url\x18\x01 \x01(\tR\x03url\"@\n" +
-	"\x0fAddFeedResponse\x12\x17\n" +
-	"\afeed_id\x18\x01 \x01(\tR\x06feedId\x12\x14\n" +
-	"\x05title\x18\x02 \x01(\tR\x05title\"\x12\n" +
+	"\x19collector/collector.proto\x12\fcollector.v1\x1a\x1cgoogle/api/annotations.proto\"\x12\n" +
 	"\x10SyncFeedsRequest\"6\n" +
 	"\x11SyncFeedsResponse\x12!\n" +
 	"\fsynced_count\x18\x01 \x01(\x05R\vsyncedCount\".\n" +
@@ -365,10 +262,9 @@ const file_collector_collector_proto_rawDesc = "" +
 	"\aUNKNOWN\x10\x00\x12\v\n" +
 	"\aSERVING\x10\x01\x12\x0f\n" +
 	"\vNOT_SERVING\x10\x02\x12\x13\n" +
-	"\x0fSERVICE_UNKNOWN\x10\x032\xe5\x02\n" +
+	"\x0fSERVICE_UNKNOWN\x10\x032\xf9\x01\n" +
 	"\x10CollectorService\x12t\n" +
-	"\vHealthCheck\x12 .collector.v1.HealthCheckRequest\x1a!.collector.v1.HealthCheckResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/collector/health\x12j\n" +
-	"\aAddFeed\x12\x1c.collector.v1.AddFeedRequest\x1a\x1d.collector.v1.AddFeedResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/api/v1/collector/feeds\x12o\n" +
+	"\vHealthCheck\x12 .collector.v1.HealthCheckRequest\x1a!.collector.v1.HealthCheckResponse\" \x82\xd3\xe4\x93\x02\x1a\x12\x18/api/v1/collector/health\x12o\n" +
 	"\tSyncFeeds\x12\x1e.collector.v1.SyncFeedsRequest\x1a\x1f.collector.v1.SyncFeedsResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v1/collector/syncB\xb7\x01\n" +
 	"\x10com.collector.v1B\x0eCollectorProtoP\x01ZBgithub.com/boykush/feedhub/server/bff/gen/go/collector;collectorv1\xa2\x02\x03CXX\xaa\x02\fCollector.V1\xca\x02\fCollector\\V1\xe2\x02\x18Collector\\V1\\GPBMetadata\xea\x02\rCollector::V1b\x06proto3"
 
@@ -385,26 +281,22 @@ func file_collector_collector_proto_rawDescGZIP() []byte {
 }
 
 var file_collector_collector_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_collector_collector_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_collector_collector_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_collector_collector_proto_goTypes = []any{
 	(HealthCheckResponse_ServingStatus)(0), // 0: collector.v1.HealthCheckResponse.ServingStatus
-	(*AddFeedRequest)(nil),                 // 1: collector.v1.AddFeedRequest
-	(*AddFeedResponse)(nil),                // 2: collector.v1.AddFeedResponse
-	(*SyncFeedsRequest)(nil),               // 3: collector.v1.SyncFeedsRequest
-	(*SyncFeedsResponse)(nil),              // 4: collector.v1.SyncFeedsResponse
-	(*HealthCheckRequest)(nil),             // 5: collector.v1.HealthCheckRequest
-	(*HealthCheckResponse)(nil),            // 6: collector.v1.HealthCheckResponse
+	(*SyncFeedsRequest)(nil),               // 1: collector.v1.SyncFeedsRequest
+	(*SyncFeedsResponse)(nil),              // 2: collector.v1.SyncFeedsResponse
+	(*HealthCheckRequest)(nil),             // 3: collector.v1.HealthCheckRequest
+	(*HealthCheckResponse)(nil),            // 4: collector.v1.HealthCheckResponse
 }
 var file_collector_collector_proto_depIdxs = []int32{
 	0, // 0: collector.v1.HealthCheckResponse.status:type_name -> collector.v1.HealthCheckResponse.ServingStatus
-	5, // 1: collector.v1.CollectorService.HealthCheck:input_type -> collector.v1.HealthCheckRequest
-	1, // 2: collector.v1.CollectorService.AddFeed:input_type -> collector.v1.AddFeedRequest
-	3, // 3: collector.v1.CollectorService.SyncFeeds:input_type -> collector.v1.SyncFeedsRequest
-	6, // 4: collector.v1.CollectorService.HealthCheck:output_type -> collector.v1.HealthCheckResponse
-	2, // 5: collector.v1.CollectorService.AddFeed:output_type -> collector.v1.AddFeedResponse
-	4, // 6: collector.v1.CollectorService.SyncFeeds:output_type -> collector.v1.SyncFeedsResponse
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
+	3, // 1: collector.v1.CollectorService.HealthCheck:input_type -> collector.v1.HealthCheckRequest
+	1, // 2: collector.v1.CollectorService.SyncFeeds:input_type -> collector.v1.SyncFeedsRequest
+	4, // 3: collector.v1.CollectorService.HealthCheck:output_type -> collector.v1.HealthCheckResponse
+	2, // 4: collector.v1.CollectorService.SyncFeeds:output_type -> collector.v1.SyncFeedsResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -421,7 +313,7 @@ func file_collector_collector_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_collector_collector_proto_rawDesc), len(file_collector_collector_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   6,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -9,7 +9,6 @@ import (
 
 	collectorv1 "github.com/boykush/feedhub/server/collector/gen/go"
 	"github.com/boykush/feedhub/server/collector/internal/server"
-	"github.com/boykush/feedhub/server/collector/internal/usecase"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -26,8 +25,7 @@ func (s *GRPCServer) Shutdown() error {
 
 // ProvideServer creates a new collector gRPC service server.
 func ProvideServer(i do.Injector) (*server.Server, error) {
-	addFeedUsecase := do.MustInvoke[*usecase.AddFeedUsecase](i)
-	return server.NewServer(addFeedUsecase), nil
+	return server.NewServer(), nil
 }
 
 // ProvideGRPCServer creates and starts a gRPC server with the collector service registered.

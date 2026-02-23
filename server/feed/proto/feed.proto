@@ -32,6 +32,17 @@ message Article {
   google.protobuf.Timestamp published_at = 5;
 }
 
+// AddFeedRequest is the request for adding a new RSS feed
+message AddFeedRequest {
+  string url = 1;
+}
+
+// AddFeedResponse is the response for adding a new RSS feed
+message AddFeedResponse {
+  string feed_id = 1;
+  string title = 2;
+}
+
 // ListFeedsRequest is the request for listing feeds
 message ListFeedsRequest {}
 
@@ -73,6 +84,8 @@ message HealthCheckResponse {
 service FeedService {
   // HealthCheck checks if the service is healthy
   rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+  // AddFeed adds a new RSS feed and fetches its articles
+  rpc AddFeed(AddFeedRequest) returns (AddFeedResponse);
   // ListFeeds returns a list of all feeds
   rpc ListFeeds(ListFeedsRequest) returns (ListFeedsResponse);
   // ListArticles returns a list of articles, optionally filtered by feed

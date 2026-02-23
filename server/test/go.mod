@@ -3,6 +3,7 @@ module github.com/boykush/feedhub/server/test
 go 1.25.5
 
 require (
+	github.com/lib/pq v1.11.2
 	github.com/testcontainers/testcontainers-go v0.40.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.40.0
 )

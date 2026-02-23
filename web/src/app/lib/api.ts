@@ -44,7 +44,7 @@ interface AddFeedResult {
 }
 
 export async function addFeed(url: string): Promise<AddFeedResult> {
-	const res = await fetch(`${API_BASE_URL}/api/v1/collector/feeds`, {
+	const res = await fetch(`${API_BASE_URL}/api/v1/feeds`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ url }),

@@ -6,7 +6,11 @@ resources:
 - service.yaml
 - serviceaccount.yaml
 - authorizationpolicy.yaml
+- migration-job.yaml
 images:
+- name: feed-migration
+  newName: ghcr.io/boykush/feedhub/feed-migration
+  newTag: fc1e284
 - name: feed-service
   newName: ghcr.io/boykush/feedhub/feed-service
   newTag: fc1e284

@@ -6,8 +6,8 @@ import (
 
 	"github.com/mmcdole/gofeed"
 
-	"github.com/boykush/feedhub/server/collector/internal/domain/model"
-	"github.com/boykush/feedhub/server/collector/internal/domain/repository"
+	"github.com/boykush/feedhub/server/feed/internal/domain/model"
+	"github.com/boykush/feedhub/server/feed/internal/domain/repository"
 )
 
 type AddFeedUsecase struct {

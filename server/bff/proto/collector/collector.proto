@@ -6,17 +6,6 @@ import "google/api/annotations.proto";
 
 option go_package = "github.com/boykush/feedhub/server/collector/gen/go/collector/v1;collectorv1";
 
-// AddFeedRequest is the request for adding a new RSS feed
-message AddFeedRequest {
-  string url = 1;
-}
-
-// AddFeedResponse is the response for adding a new RSS feed
-message AddFeedResponse {
-  string feed_id = 1;
-  string title = 2;
-}
-
 // SyncFeedsRequest is the request for syncing all feeds
 message SyncFeedsRequest {}
 
@@ -47,13 +36,6 @@ service CollectorService {
   rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {
     option (google.api.http) = {
       get: "/api/v1/collector/health"
-    };
-  }
-  // AddFeed adds a new RSS feed and fetches its articles
-  rpc AddFeed(AddFeedRequest) returns (AddFeedResponse) {
-    option (google.api.http) = {
-      post: "/api/v1/collector/feeds"
-      body: "*"
     };
   }
   // SyncFeeds syncs all registered feeds and fetches new articles

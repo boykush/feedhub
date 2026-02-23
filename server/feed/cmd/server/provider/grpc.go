@@ -9,6 +9,7 @@ import (
 
 	feedv1 "github.com/boykush/feedhub/server/feed/gen/go"
 	"github.com/boykush/feedhub/server/feed/internal/server"
+	"github.com/boykush/feedhub/server/feed/internal/usecase"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -25,7 +26,8 @@ func (s *GRPCServer) Shutdown() error {
 
 // ProvideServer creates a new feed gRPC service server.
 func ProvideServer(i do.Injector) (*server.Server, error) {
-	return server.NewServer(), nil
+	addFeedUsecase := do.MustInvoke[*usecase.AddFeedUsecase](i)
+	return server.NewServer(addFeedUsecase), nil
 }
 
 // ProvideGRPCServer creates and starts a gRPC server with the feed service registered.

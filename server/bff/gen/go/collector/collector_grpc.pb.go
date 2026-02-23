@@ -20,7 +20,6 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	CollectorService_HealthCheck_FullMethodName = "/collector.v1.CollectorService/HealthCheck"
-	CollectorService_AddFeed_FullMethodName     = "/collector.v1.CollectorService/AddFeed"
 	CollectorService_SyncFeeds_FullMethodName   = "/collector.v1.CollectorService/SyncFeeds"
 )
 
@@ -32,8 +31,6 @@ const (
 type CollectorServiceClient interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
-	// AddFeed adds a new RSS feed and fetches its articles
-	AddFeed(ctx context.Context, in *AddFeedRequest, opts ...grpc.CallOption) (*AddFeedResponse, error)
 	// SyncFeeds syncs all registered feeds and fetches new articles
 	SyncFeeds(ctx context.Context, in *SyncFeedsRequest, opts ...grpc.CallOption) (*SyncFeedsResponse, error)
 }
@@ -50,16 +47,6 @@ func (c *collectorServiceClient) HealthCheck(ctx context.Context, in *HealthChec
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HealthCheckResponse)
 	err := c.cc.Invoke(ctx, CollectorService_HealthCheck_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *collectorServiceClient) AddFeed(ctx context.Context, in *AddFeedRequest, opts ...grpc.CallOption) (*AddFeedResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddFeedResponse)
-	err := c.cc.Invoke(ctx, CollectorService_AddFeed_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,8 +71,6 @@ func (c *collectorServiceClient) SyncFeeds(ctx context.Context, in *SyncFeedsReq
 type CollectorServiceServer interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
-	// AddFeed adds a new RSS feed and fetches its articles
-	AddFeed(context.Context, *AddFeedRequest) (*AddFeedResponse, error)
 	// SyncFeeds syncs all registered feeds and fetches new articles
 	SyncFeeds(context.Context, *SyncFeedsRequest) (*SyncFeedsResponse, error)
 	mustEmbedUnimplementedCollectorServiceServer()
@@ -100,9 +85,6 @@ type UnimplementedCollectorServiceServer struct{}
 
 func (UnimplementedCollectorServiceServer) HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HealthCheck not implemented")
-}
-func (UnimplementedCollectorServiceServer) AddFeed(context.Context, *AddFeedRequest) (*AddFeedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method AddFeed not implemented")
 }
 func (UnimplementedCollectorServiceServer) SyncFeeds(context.Context, *SyncFeedsRequest) (*SyncFeedsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SyncFeeds not implemented")
@@ -146,24 +128,6 @@ func _CollectorService_HealthCheck_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CollectorService_AddFeed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddFeedRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CollectorServiceServer).AddFeed(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: CollectorService_AddFeed_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CollectorServiceServer).AddFeed(ctx, req.(*AddFeedRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _CollectorService_SyncFeeds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SyncFeedsRequest)
 	if err := dec(in); err != nil {
@@ -192,10 +156,6 @@ var CollectorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HealthCheck",
 			Handler:    _CollectorService_HealthCheck_Handler,
-		},
-		{
-			MethodName: "AddFeed",
-			Handler:    _CollectorService_AddFeed_Handler,
 		},
 		{
 			MethodName: "SyncFeeds",

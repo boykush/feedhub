@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	FeedService_HealthCheck_FullMethodName  = "/feed.v1.FeedService/HealthCheck"
+	FeedService_AddFeed_FullMethodName      = "/feed.v1.FeedService/AddFeed"
 	FeedService_ListFeeds_FullMethodName    = "/feed.v1.FeedService/ListFeeds"
 	FeedService_ListArticles_FullMethodName = "/feed.v1.FeedService/ListArticles"
 )
@@ -32,6 +33,8 @@ const (
 type FeedServiceClient interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
+	// AddFeed adds a new RSS feed and fetches its articles
+	AddFeed(ctx context.Context, in *AddFeedRequest, opts ...grpc.CallOption) (*AddFeedResponse, error)
 	// ListFeeds returns a list of all feeds
 	ListFeeds(ctx context.Context, in *ListFeedsRequest, opts ...grpc.CallOption) (*ListFeedsResponse, error)
 	// ListArticles returns a list of articles, optionally filtered by feed
@@ -50,6 +53,16 @@ func (c *feedServiceClient) HealthCheck(ctx context.Context, in *HealthCheckRequ
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(HealthCheckResponse)
 	err := c.cc.Invoke(ctx, FeedService_HealthCheck_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *feedServiceClient) AddFeed(ctx context.Context, in *AddFeedRequest, opts ...grpc.CallOption) (*AddFeedResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddFeedResponse)
+	err := c.cc.Invoke(ctx, FeedService_AddFeed_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,6 +97,8 @@ func (c *feedServiceClient) ListArticles(ctx context.Context, in *ListArticlesRe
 type FeedServiceServer interface {
 	// HealthCheck checks if the service is healthy
 	HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
+	// AddFeed adds a new RSS feed and fetches its articles
+	AddFeed(context.Context, *AddFeedRequest) (*AddFeedResponse, error)
 	// ListFeeds returns a list of all feeds
 	ListFeeds(context.Context, *ListFeedsRequest) (*ListFeedsResponse, error)
 	// ListArticles returns a list of articles, optionally filtered by feed
@@ -100,6 +115,9 @@ type UnimplementedFeedServiceServer struct{}
 
 func (UnimplementedFeedServiceServer) HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HealthCheck not implemented")
+}
+func (UnimplementedFeedServiceServer) AddFeed(context.Context, *AddFeedRequest) (*AddFeedResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AddFeed not implemented")
 }
 func (UnimplementedFeedServiceServer) ListFeeds(context.Context, *ListFeedsRequest) (*ListFeedsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListFeeds not implemented")
@@ -142,6 +160,24 @@ func _FeedService_HealthCheck_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FeedServiceServer).HealthCheck(ctx, req.(*HealthCheckRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FeedService_AddFeed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddFeedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FeedServiceServer).AddFeed(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FeedService_AddFeed_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FeedServiceServer).AddFeed(ctx, req.(*AddFeedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,6 +228,10 @@ var FeedService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "HealthCheck",
 			Handler:    _FeedService_HealthCheck_Handler,
+		},
+		{
+			MethodName: "AddFeed",
+			Handler:    _FeedService_AddFeed_Handler,
 		},
 		{
 			MethodName: "ListFeeds",

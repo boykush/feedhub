@@ -28,3 +28,5 @@ spec:
         env:
         - name: FEED_SERVICE_PORT
           value: "50052"
+        - name: DATABASE_URL
+          value: postgres://feedhub:feedhub-local-password@postgres-rw:5432/feed_db?sslmode=disable

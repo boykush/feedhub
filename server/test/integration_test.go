@@ -2,15 +2,18 @@ package test
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
+	_ "github.com/lib/pq"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
@@ -49,22 +52,37 @@ func TestIntegration(t *testing.T) {
 	}
 	t.Cleanup(func() { pgContainer.Terminate(ctx) })
 
-	databaseURL, err := pgContainer.ConnectionString(ctx, "sslmode=disable")
+	collectorDBURL, err := pgContainer.ConnectionString(ctx, "sslmode=disable")
 	if err != nil {
 		t.Fatalf("failed to get connection string: %v", err)
 	}
 
+	// Create feed_test database for feed service
+	feedDBURL := createDatabase(t, collectorDBURL, "feed_test")
+
 	// 2. Run Atlas migrations
-	migrationsDir := filepath.Join(projectRoot, "server/collector/migrations")
+	collectorMigrationsDir := filepath.Join(projectRoot, "server/collector/migrations")
 	atlasCmd := exec.Command("mise", "exec", "--", "atlas", "migrate", "apply",
-		"--dir", fmt.Sprintf("file://%s", migrationsDir),
-		"--url", databaseURL,
+		"--dir", fmt.Sprintf("file://%s", collectorMigrationsDir),
+		"--url", collectorDBURL,
 	)
 	atlasCmd.Dir = projectRoot
 	atlasCmd.Stdout = os.Stdout
 	atlasCmd.Stderr = os.Stderr
 	if err := atlasCmd.Run(); err != nil {
-		t.Fatalf("failed to run atlas migrations: %v", err)
+		t.Fatalf("failed to run collector atlas migrations: %v", err)
+	}
+
+	feedMigrationsDir := filepath.Join(projectRoot, "server/feed/migrations")
+	feedAtlasCmd := exec.Command("mise", "exec", "--", "atlas", "migrate", "apply",
+		"--dir", fmt.Sprintf("file://%s", feedMigrationsDir),
+		"--url", feedDBURL,
+	)
+	feedAtlasCmd.Dir = projectRoot
+	feedAtlasCmd.Stdout = os.Stdout
+	feedAtlasCmd.Stderr = os.Stderr
+	if err := feedAtlasCmd.Run(); err != nil {
+		t.Fatalf("failed to run feed atlas migrations: %v", err)
 	}
 
 	// 3. Start services using free ports to avoid conflicts
@@ -74,7 +92,10 @@ func TestIntegration(t *testing.T) {
 
 	// Start feed service
 	feedCmd := exec.Command(filepath.Join(projectRoot, "server/feed/bin/server"))
-	feedCmd.Env = append(os.Environ(), fmt.Sprintf("FEED_SERVICE_PORT=%s", feedPort))
+	feedCmd.Env = append(os.Environ(),
+		fmt.Sprintf("FEED_SERVICE_PORT=%s", feedPort),
+		fmt.Sprintf("DATABASE_URL=%s", feedDBURL),
+	)
 	feedCmd.Stdout = os.Stdout
 	feedCmd.Stderr = os.Stderr
 	if err := feedCmd.Start(); err != nil {
@@ -86,7 +107,7 @@ func TestIntegration(t *testing.T) {
 	collectorCmd := exec.Command(filepath.Join(projectRoot, "server/collector/bin/server"))
 	collectorCmd.Env = append(os.Environ(),
 		fmt.Sprintf("COLLECTOR_SERVICE_PORT=%s", collectorPort),
-		fmt.Sprintf("DATABASE_URL=%s", databaseURL),
+		fmt.Sprintf("DATABASE_URL=%s", collectorDBURL),
 	)
 	collectorCmd.Stdout = os.Stdout
 	collectorCmd.Stderr = os.Stderr
@@ -120,6 +141,7 @@ func TestIntegration(t *testing.T) {
 		filepath.Join(projectRoot, "server/test/collector_health.hurl"),
 		filepath.Join(projectRoot, "server/test/collector_operations.hurl"),
 		filepath.Join(projectRoot, "server/test/feed_health.hurl"),
+		filepath.Join(projectRoot, "server/test/feed_operations.hurl"),
 		filepath.Join(projectRoot, "server/test/feed_list.hurl"),
 	)
 	hurlCmd.Dir = projectRoot
@@ -128,6 +150,39 @@ func TestIntegration(t *testing.T) {
 	if err := hurlCmd.Run(); err != nil {
 		t.Fatalf("hurl tests failed: %v", err)
 	}
+}
+
+func createDatabase(t *testing.T, baseURL, dbName string) string {
+	t.Helper()
+
+	db, err := sql.Open("postgres", baseURL)
+	if err != nil {
+		t.Fatalf("failed to connect to postgres: %v", err)
+	}
+	defer db.Close()
+
+	_, err = db.Exec(fmt.Sprintf("CREATE DATABASE %s", dbName))
+	if err != nil {
+		t.Fatalf("failed to create database %s: %v", dbName, err)
+	}
+
+	return replaceDBName(baseURL, dbName)
+}
+
+func replaceDBName(connStr, newDB string) string {
+	// Connection string format: postgres://user:pass@host:port/dbname?params
+	qIdx := strings.Index(connStr, "?")
+	query := ""
+	base := connStr
+	if qIdx >= 0 {
+		query = connStr[qIdx:]
+		base = connStr[:qIdx]
+	}
+	lastSlash := strings.LastIndex(base, "/")
+	if lastSlash < 0 {
+		return connStr
+	}
+	return base[:lastSlash+1] + newDB + query
 }
 
 func freePort(t *testing.T) string {
