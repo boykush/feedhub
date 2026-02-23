@@ -10,7 +10,7 @@ resources:
 images:
 - name: feed-migration
   newName: ghcr.io/boykush/feedhub/feed-migration
-  newTag: fc1e284
+  newTag: 11005c8
 - name: feed-service
   newName: ghcr.io/boykush/feedhub/feed-service
-  newTag: e468a3d
+  newTag: 11005c8
