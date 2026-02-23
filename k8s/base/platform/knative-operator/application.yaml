@@ -1,22 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: knative-serving
+  name: knative-operator
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   project: default
   source:
-    repoURL: https://github.com/boykush/feedhub
-    path: k8s/base/platform/knative-serving
-    targetRevision: main
-    directory:
-      recurse: false
-      exclude: "application.yaml"
+    chart: knative-operator
+    repoURL: https://knative.github.io/operator
+    targetRevision: 1.17.8
   destination:
     server: https://kubernetes.default.svc
-    namespace: knative-serving
+    namespace: knative-operator
   syncPolicy:
     automated:
       prune: true
@@ -30,6 +27,3 @@ spec:
         duration: 5s
         factor: 2
         maxDuration: 3m
-  info:
-    - name: dependency
-      value: Requires knative-operator to be deployed first
