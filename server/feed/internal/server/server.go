@@ -40,10 +40,12 @@ func (s *Server) AddFeed(ctx context.Context, req *feedv1.AddFeedRequest) (*feed
 	}, nil
 }
 
+// TODO: implement ListFeeds with database query
 func (s *Server) ListFeeds(ctx context.Context, req *feedv1.ListFeedsRequest) (*feedv1.ListFeedsResponse, error) {
 	return &feedv1.ListFeedsResponse{}, nil
 }
 
+// TODO: implement ListArticles with database query
 func (s *Server) ListArticles(ctx context.Context, req *feedv1.ListArticlesRequest) (*feedv1.ListArticlesResponse, error) {
 	return &feedv1.ListArticlesResponse{}, nil
 }
