@@ -8,3 +8,4 @@ resources:
   - istio-ingressgateway
   - feedhub/application.yaml
   - cloudnative-pg/application.yaml
+  - knative-serving/application.yaml

@@ -1,21 +1,18 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: serving.knative.dev/v1
+kind: Service
 metadata:
   name: collector-service
   labels:
     app: collector-service
+    networking.knative.dev/visibility: cluster-local
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: collector-service
   template:
     metadata:
       labels:
         app: collector-service
-        version: v1
       annotations:
-        sidecar.istio.io/inject: "true"
+        autoscaling.knative.dev/min-scale: "0"
+        autoscaling.knative.dev/max-scale: "1"
     spec:
       serviceAccountName: collector-service
       containers:
@@ -23,7 +20,7 @@ spec:
         image: collector-service:latest
         ports:
         - containerPort: 50053
-          name: grpc
+          name: h2c
           protocol: TCP
         env:
         - name: DATABASE_URL

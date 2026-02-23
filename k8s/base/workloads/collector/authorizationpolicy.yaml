@@ -12,3 +12,4 @@ spec:
     - source:
         principals:
         - cluster.local/ns/default/sa/bff-service
+        - cluster.local/ns/knative-serving/sa/controller
