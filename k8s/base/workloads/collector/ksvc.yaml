@@ -11,7 +11,7 @@ spec:
       labels:
         app: collector-service
       annotations:
-        sidecar.istio.io/inject: "true"
+        sidecar.istio.io/inject: "false"
         autoscaling.knative.dev/min-scale: "0"
         autoscaling.knative.dev/max-scale: "1"
     spec:
