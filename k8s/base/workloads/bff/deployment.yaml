@@ -31,4 +31,4 @@ spec:
         - name: FEED_SERVICE_ADDR
           value: "feed-service:50052"
         - name: COLLECTOR_SERVICE_ADDR
-          value: "collector-service.default.svc.cluster.local:80"
+          value: "collector-service:50053"
